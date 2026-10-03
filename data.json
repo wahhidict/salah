@@ -1,0 +1,31 @@
+{
+  "whatsapp_number": "963945333924",
+  "phone_number": "0945333924",
+  "map_link": "https://maps.google.com",
+  "opening_hours": "يومياً من الساعة 12:00 ظهراً حتى 2:00 صباحاً",
+  "status_text": "مفتوح الآن • خدمة توصيل ومباشر",
+  "ticker_active": true,
+  "ticker_text": "📣 أهلاً بكم في فواكه أبو صلاح! خدمة التوصيل مجانية للطلبات فوق 100,000 ل.س ضمن المنطقة 🍓",
+  "items": [
+    {
+      "id": 1,
+      "name": "كوكتيل الإمبراطور",
+      "category": "كوكتيلات أبو صلاح",
+      "description": "طبقات فواكه استوائية طازجة + قشطة بلدية + عسل جبال + مكسرات مشكلة",
+      "price": "35,000 ل.س",
+      "available": true,
+      "badge": "الأكثر طلباً",
+      "image": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      "id": 2,
+      "name": "عصير برتقال طبيعي",
+      "category": "عصائر طازجة",
+      "description": "برتقال معصور طازج فور الطلب بدون سكر مضاف",
+      "price": "18,000 ل.س",
+      "available": true,
+      "badge": "",
+      "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80"
+    }
+  ]
+}
