@@ -10,32 +10,31 @@
   
   <style>
     :root {
-      --bg-dark: #05140d;
-      --accent-gold: #d4af37;
-      --accent-gold-light: #f7e7a9;
-      --text-white: #ffffff;
-      --text-dark: #0e2017;
-      --text-muted: #64756c;
+      --gold-primary: #f39c12;
+      --gold-light: #f1c40f;
+      --glass-bg: rgba(12, 36, 24, 0.65);
+      --glass-card: rgba(255, 255, 255, 0.88);
+      --glass-border: rgba(255, 255, 255, 0.35);
+      --text-dark: #0a2216;
+      --text-light: #f4f9f6;
       --green-wa: #25d366;
-      --card-glass: rgba(255, 255, 255, 0.94);
-      --card-border: rgba(255, 255, 255, 0.6);
-      --shadow-lux: 0 16px 40px rgba(0, 0, 0, 0.25);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; }
     
     body {
-      background: radial-gradient(circle at 50% 0%, #0d3020 0%, #05140d 80%);
-      background-attachment: fixed;
-      color: var(--text-white);
+      background: linear-gradient(135deg, rgba(5, 20, 13, 0.88), rgba(12, 45, 28, 0.92)),
+                  url('https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=1200&q=80') center/cover fixed;
+      color: var(--text-light);
       padding-bottom: 120px;
       min-height: 100vh;
     }
 
-    /* Top Announcement Ticker Bar */
+    /* Ticker Tape */
     .ticker-wrap {
       display: none;
-      background: linear-gradient(90deg, #b38728, #fcf6ba, #bf953f);
+      background: rgba(243, 156, 18, 0.95);
+      backdrop-filter: blur(8px);
       color: #05140d;
       padding: 8px 0;
       font-weight: 800;
@@ -56,69 +55,71 @@
       100% { transform: translate3d(100%, 0, 0); }
     }
 
+    /* Header Glass Effect */
     header {
       position: relative;
       z-index: 1;
       text-align: center;
       padding: 30px 20px 20px;
       max-width: 680px;
-      margin: 0 auto;
+      margin: 20px auto 10px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
 
     .status-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(212, 175, 55, 0.3);
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       padding: 6px 18px;
       border-radius: 30px;
       font-size: 0.82rem;
-      color: var(--accent-gold-light);
-      margin-bottom: 15px;
+      color: #e2f0d9;
+      margin-bottom: 12px;
     }
 
     .pulse-dot {
       width: 8px;
       height: 8px;
-      background-color: #2ec4b6;
+      background-color: #2ecc71;
       border-radius: 50%;
-      box-shadow: 0 0 10px #2ec4b6;
+      box-shadow: 0 0 10px #2ecc71;
       animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 196, 182, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(46, 196, 182, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 196, 182, 0); }
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(46, 204, 113, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
     }
 
     .brand-title {
-      font-size: 2.5rem;
+      font-size: 2.4rem;
       font-weight: 900;
-      background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
+      background: linear-gradient(135deg, #ffe082 0%, #f39c12 50%, #ffffff 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 4px;
     }
 
-    .brand-subtitle { font-size: 0.92rem; color: #a4c2b2; font-weight: 500; margin-bottom: 20px; }
+    .brand-subtitle { font-size: 0.9rem; color: #c2e2d2; font-weight: 500; margin-bottom: 18px; }
 
-    /* Ultra-luxurious Top Action Buttons Bar */
     .top-actions-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      margin-top: 15px;
+      margin-top: 10px;
     }
 
     .action-card {
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(212, 175, 55, 0.25);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 16px;
       padding: 10px 8px;
       text-decoration: none;
@@ -128,104 +129,110 @@
       align-items: center;
       gap: 6px;
       transition: all 0.3s ease;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
 
-    .action-card:active { transform: scale(0.96); background: rgba(212, 175, 55, 0.15); }
-    .action-icon { width: 22px; height: 22px; fill: var(--accent-gold-light); }
-    .action-label { font-size: 0.78rem; font-weight: 700; color: #e0ece5; }
+    .action-card:active { transform: scale(0.95); background: rgba(243, 156, 18, 0.3); }
+    .action-icon { width: 22px; height: 22px; fill: #ffe082; }
+    .action-label { font-size: 0.78rem; font-weight: 700; }
 
-    /* Category Nav Bar */
+    /* Sticky Navigation */
     .nav-wrapper {
       position: sticky;
-      top: 0;
+      top: 10px;
       z-index: 100;
-      background: rgba(5, 20, 13, 0.88);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0 16px;
+      max-width: 680px;
+      margin: 15px auto;
     }
 
     .category-nav {
       display: flex;
       gap: 10px;
       overflow-x: auto;
-      padding: 0 16px;
+      padding: 10px 14px;
       scrollbar-width: none;
-      max-width: 680px;
-      margin: 0 auto;
+      background: rgba(8, 28, 18, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
 
     .category-nav::-webkit-scrollbar { display: none; }
 
     .nav-btn {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.1);
       color: #e0ece5;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 8px 18px;
-      border-radius: 25px;
+      padding: 8px 20px;
+      border-radius: 20px;
       white-space: nowrap;
       font-weight: 700;
       font-size: 0.85rem;
       cursor: pointer;
+      transition: all 0.3s;
     }
 
     .nav-btn.active {
-      background: linear-gradient(135deg, #cfa845, #aa8328);
-      color: #05140d;
-      border-color: #d4af37;
-      box-shadow: 0 6px 18px rgba(212, 175, 55, 0.3);
+      background: linear-gradient(135deg, #f39c12, #e67e22);
+      color: #ffffff;
+      border-color: #f39c12;
+      box-shadow: 0 6px 18px rgba(243, 156, 18, 0.4);
     }
 
-    /* Container & Item Cards */
-    .main-container { max-width: 680px; margin: 0 auto; padding: 20px 16px; }
-    .category-section { margin-top: 20px; }
+    /* Content Area */
+    .main-container { max-width: 680px; margin: 0 auto; padding: 10px 16px; }
+    .category-section { margin-top: 25px; }
 
     .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-    .section-title { font-size: 1.3rem; font-weight: 800; color: var(--accent-gold-light); }
-    .section-divider { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(212,175,55,0.4), transparent); }
+    .section-title { font-size: 1.3rem; font-weight: 900; color: #ffe082; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+    .section-divider { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(243,156,18,0.6), transparent); }
 
+    /* Glass Cards for Food Items */
     .item-card {
-      background: var(--card-glass);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
+      background: var(--glass-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 22px;
       margin-bottom: 16px;
       padding: 14px;
       display: flex;
       gap: 14px;
-      box-shadow: var(--shadow-lux);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
     }
 
-    .img-box { position: relative; width: 100px; height: 100px; flex-shrink: 0; border-radius: 14px; overflow: hidden; background: #e2eae5; }
+    .img-box { position: relative; width: 105px; height: 105px; flex-shrink: 0; border-radius: 16px; overflow: hidden; background: #e2eae5; }
     .item-img { width: 100%; height: 100%; object-fit: cover; }
 
     .badge-tag {
-      position: absolute; top: 5px; right: 5px; background: rgba(5, 20, 13, 0.9); color: var(--accent-gold-light);
-      font-size: 0.62rem; font-weight: 800; padding: 2px 7px; border-radius: 6px; border: 0.5px solid rgba(212, 175, 55, 0.4);
+      position: absolute; top: 6px; right: 6px; background: rgba(5, 20, 13, 0.88); color: #ffe082;
+      font-size: 0.62rem; font-weight: 800; padding: 3px 8px; border-radius: 8px; border: 0.5px solid rgba(243, 156, 18, 0.5);
     }
 
     .item-details { display: flex; flex-direction: column; justify-content: space-between; flex: 1; }
-    .item-name { font-size: 1.05rem; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; }
-    .item-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px; }
+    .item-name { font-size: 1.1rem; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; }
+    .item-desc { font-size: 0.8rem; color: #4a5d52; line-height: 1.4; margin-bottom: 8px; }
 
     .item-footer { display: flex; justify-content: space-between; align-items: center; }
-    .item-price { font-size: 1rem; font-weight: 900; color: #082b1b; background: #eaf3ed; padding: 4px 10px; border-radius: 10px; }
+    .item-price { font-size: 1rem; font-weight: 900; color: #072a1a; background: #e6f2eb; padding: 5px 12px; border-radius: 12px; }
 
     .btn-add-cart {
       background: linear-gradient(135deg, #0d3020, #184e35);
       color: white;
       border: none;
-      padding: 7px 14px;
-      border-radius: 12px;
+      padding: 8px 16px;
+      border-radius: 14px;
       font-size: 0.82rem;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
+      box-shadow: 0 4px 12px rgba(13, 48, 32, 0.3);
     }
 
-    /* Floating Cart Checkout Bar */
+    .btn-add-cart:active { transform: scale(0.95); }
+
+    /* Cart Floating Bar */
     .cart-float-bar {
       position: fixed;
       bottom: 20px;
@@ -233,60 +240,59 @@
       transform: translateX(-50%);
       width: calc(100% - 32px);
       max-width: 520px;
-      background: linear-gradient(135deg, #0d3020, #05140d);
-      border: 1px solid rgba(212, 175, 55, 0.5);
-      border-radius: 30px;
-      padding: 12px 22px;
+      background: linear-gradient(135deg, #113a27, #06180f);
+      border: 1px solid rgba(243, 156, 18, 0.6);
+      border-radius: 35px;
+      padding: 12px 24px;
       display: none;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.7);
       z-index: 999;
       cursor: pointer;
     }
 
-    .cart-count-badge { background: var(--accent-gold); color: #05140d; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.85rem; }
-    .cart-price-total { font-weight: 900; color: var(--accent-gold-light); font-size: 1.05rem; }
+    .cart-count-badge { background: #f39c12; color: #05140d; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.88rem; }
+    .cart-price-total { font-weight: 900; color: #ffe082; font-size: 1.1rem; }
 
-    /* Order Modal (بيانات الزبون والسلة) */
+    /* Modal Sheet */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.75); backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.8); backdrop-filter: blur(12px);
       display: none; justify-content: center; align-items: flex-end; z-index: 2000;
     }
 
     .modal-content {
-      background: #081d13;
-      border: 1px solid rgba(212, 175, 55, 0.4);
+      background: #092015;
+      border: 1px solid rgba(243, 156, 18, 0.4);
       border-radius: 28px 28px 0 0;
       width: 100%; max-width: 600px; max-height: 85vh;
       overflow-y: auto; padding: 25px 20px; color: white;
     }
 
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .modal-title { font-size: 1.3rem; font-weight: 800; color: var(--accent-gold-light); }
-    .close-btn { background: rgba(255,255,255,0.1); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; }
+    .modal-title { font-size: 1.3rem; font-weight: 800; color: #ffe082; }
+    .close-btn { background: rgba(255,255,255,0.1); border: none; color: white; width: 34px; height: 34px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; }
 
-    .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
     .qty-controls { display: flex; align-items: center; gap: 10px; }
-    .btn-qty { background: rgba(212,175,55,0.2); border: 1px solid var(--accent-gold); color: white; width: 26px; height: 26px; border-radius: 8px; font-weight: 800; cursor: pointer; }
+    .btn-qty { background: rgba(243,156,18,0.2); border: 1px solid #f39c12; color: white; width: 28px; height: 28px; border-radius: 8px; font-weight: 800; cursor: pointer; }
 
     .form-group { margin-top: 15px; }
-    .form-group label { display: block; font-size: 0.85rem; color: var(--accent-gold-light); margin-bottom: 6px; font-weight: 700; }
-    .form-control { width: 100%; padding: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; color: white; font-size: 0.95rem; }
-    .form-control:focus { border-color: var(--accent-gold); outline: none; }
+    .form-group label { display: block; font-size: 0.85rem; color: #ffe082; margin-bottom: 6px; font-weight: 700; }
+    .form-control { width: 100%; padding: 12px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; color: white; font-size: 0.95rem; }
+    .form-control:focus { border-color: #f39c12; outline: none; }
 
     .btn-submit-wa {
-      margin-top: 22px; width: 100%; background: var(--green-wa); color: white; border: none; padding: 14px;
+      margin-top: 22px; width: 100%; background: var(--green-wa); color: white; border: none; padding: 15px;
       border-radius: 16px; font-size: 1.05rem; font-weight: 800; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px;
     }
 
-    footer { text-align: center; padding: 25px 15px; color: #82a392; font-size: 0.8rem; }
+    footer { text-align: center; padding: 30px 15px; color: #94b5a3; font-size: 0.82rem; }
   </style>
 </head>
 <body>
 
-  <!-- 1️⃣ شريط الإعلانات العلوي المتحرك -->
   <div class="ticker-wrap" id="tickerWrap">
     <div class="ticker-text" id="tickerText">...</div>
   </div>
@@ -298,9 +304,8 @@
     </div>
 
     <h1 class="brand-title">فواكه أبو صلاح</h1>
-    <p class="brand-subtitle" id="hoursSub">دمشق - كفرسوسة • أطيب العصائر والكوكتيلات الطازجة</p>
+    <p class="brand-subtitle">دمشق - كفرسوسة • أطيب العصائر والكوكتيلات الطازجة 🍓🍊</p>
 
-    <!-- 2️⃣ أزرار التفاعل والتواصل السريعة الفاخرة أعلى الصفحة -->
     <div class="top-actions-grid">
       <a id="callBtn" href="#" class="action-card">
         <svg class="action-icon" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
@@ -325,16 +330,14 @@
     <p style="text-align:center; padding: 40px; color: #a4c2b2;">جاري تحميل المنيو...</p>
   </main>
 
-  <!-- 3️⃣ شريط السلة العائم السريع -->
   <div class="cart-float-bar" id="cartFloatBar" onclick="openModal()">
-    <div style="display: flex; align-items: center; gap: 10px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
       <div class="cart-count-badge" id="cartCount">0</div>
       <span style="font-weight: 800;">استكمال الطلب 🛒</span>
     </div>
     <div class="cart-price-total" id="cartTotal">0 ل.س</div>
   </div>
 
-  <!-- 4️⃣ نافذة إدخال بيانات الزبون والطلب (Modal) -->
   <div class="modal-overlay" id="orderModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -343,10 +346,8 @@
       </div>
 
       <div id="cartItemsList" style="margin-bottom: 20px;"></div>
-
       <hr style="border-color: rgba(255,255,255,0.1); margin-bottom: 15px;">
 
-      <!-- نموذج إدخال بيانات الزبون -->
       <div class="form-group">
         <label>الاسم الكامل *</label>
         <input type="text" id="custName" class="form-control" placeholder="مثال: أحمد المحمد">
@@ -374,8 +375,7 @@
   </div>
 
   <footer>
-    <p>© فواكه أبو صلاح</p>
-    <p style="margin-top: 8px;"><a href="./admin/" style="color: var(--accent-gold-light); text-decoration: none; font-weight: 700;">⚙ لوحة التحكم والإدارة</a></p>
+    <p>© فواكه أبو صلاح - كفرسوسة</p>
   </footer>
 
   <script>
@@ -388,13 +388,11 @@
       .catch(() => alert('عذراً، حدث خطأ في تحميل بيانات المنيو.'));
 
     function initApp() {
-      // إعداد الأزرار العلوية والمعلومات
       document.getElementById('statusText').innerText = appData.status_text || "مفتوح الآن";
       document.getElementById('callBtn').href = "tel:" + (appData.phone_number || "");
       document.getElementById('mapBtn').href = appData.map_link || "#";
       document.getElementById('topWaBtn').href = `https://wa.me/${appData.whatsapp_number}?text=${encodeURIComponent('مرحباً فواكه أبو صلاح 👋')}`;
 
-      // التحكم بشريط الإعلانات التفاعلي
       if (appData.ticker_active) {
         document.getElementById('tickerWrap').style.display = 'block';
         document.getElementById('tickerText').innerText = appData.ticker_text || "";
@@ -450,8 +448,8 @@
                 <div class="item-footer">
                   <span class="item-price">${item.price}</span>
                   ${item.available 
-                    ? `<button class="btn-add-cart" onclick="addToCart(${item.id})">+ إضافه للطلب</button>` 
-                    : `<span style="font-size:0.75rem; color:#c62828; font-weight:700;">غير متوفر</span>`
+                    ? `<button class="btn-add-cart" onclick="addToCart(${item.id})">+ إضافة</button>` 
+                    : `<span style="font-size:0.75rem; color:#c62828; font-weight:800;">غير متوفر</span>`
                   }
                 </div>
               </div>
@@ -512,7 +510,7 @@
           <div class="cart-item-row">
             <div>
               <div style="font-weight:700;">${item.name}</div>
-              <div style="font-size:0.8rem; color:#d4af37;">${item.price}</div>
+              <div style="font-size:0.8rem; color:#ffe082;">${item.price}</div>
             </div>
             <div class="qty-controls">
               <button class="btn-qty" onclick="changeQty(${item.id}, -1)">-</button>
