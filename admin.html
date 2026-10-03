@@ -15,21 +15,24 @@
     input:focus, textarea:focus, select:focus { border-color: #f39c12; outline: none; }
     .btn { background: #f39c12; color: #05140d; font-weight: 800; padding: 10px 18px; border: none; border-radius: 12px; cursor: pointer; transition: 0.2s; }
     .btn-green { background: #27ae60; color: white; }
+    .btn-blue { background: #2980b9; color: white; }
     .btn-danger { background: #c62828; color: white; }
     .btn-sm { padding: 6px 12px; font-size: 0.82rem; }
     
-    .item-card-admin { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 14px; margin-bottom: 12px; display: flex; gap: 12px; align-items: center; justify-content: space-between; }
+    .item-card-admin { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 14px; margin-bottom: 12px; }
+    .item-row { display: flex; gap: 12px; align-items: center; justify-content: space-between; }
     .preview-img { width: 65px; height: 65px; border-radius: 10px; object-fit: cover; background: #222; }
     
     .upload-box { background: rgba(243, 156, 18, 0.1); border: 2px dashed #f39c12; padding: 15px; text-align: center; border-radius: 12px; cursor: pointer; margin-bottom: 14px; }
+    .edit-form { margin-top: 15px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.2); display: none; }
   </style>
 </head>
 <body>
 
   <h1>لوحة إدارة المنيو 🛠️</h1>
-  <p style="color: #a4c2b2; margin-bottom: 20px; font-size: 0.9rem;">يمكنك تعديل المنيو وإضافة الأصناف ورفع الصور مباشرة من هاتفك، ثم تنزيل ملف data.json واستبداله في GitHub.</p>
+  <p style="color: #a4c2b2; margin-bottom: 20px; font-size: 0.9rem;">عند إضافة صنف أو تعديله، اضغط على زر التنزيل بالأسفل وحمّل ملف data.json إلى GitHub لثبات التغييرات.</p>
 
-  <!-- إعدادات المحل العامة -->
+  <!-- الإعدادات العامة -->
   <div class="card">
     <h3 style="color:#ffe082; margin-bottom:12px;">1️⃣ الإعدادات العامة</h3>
     <label>رقم الواتساب (مع رمز الدولة):</label>
@@ -73,7 +76,7 @@
 
   <!-- قائمة الأصناف والتعديل -->
   <div class="card">
-    <h3 style="color:#ffe082; margin-bottom:15px;">3️⃣ الأصناف الموجودة حالياً</h3>
+    <h3 style="color:#ffe082; margin-bottom:15px;">3️⃣ الأصناف الموجودة حالياً (تعديل / حذف)</h3>
     <div id="itemsContainer">جاري التحميل...</div>
   </div>
 
@@ -85,7 +88,6 @@
   <script>
     let appData = { items: [] };
 
-    // جلب ملف data.json من نفس المجلد
     fetch('data.json')
       .then(res => {
         if (!res.ok) throw new Error('تعذر جلب الملف');
@@ -97,7 +99,7 @@
       })
       .catch(err => {
         console.error(err);
-        document.getElementById('itemsContainer').innerHTML = '<p style="color:#e74c3c;">تنبيه: لم يتم العثور على data.json بنفس المجلد. يمكنك إضافة الأصناف وحفظ الملف جديداً.</p>';
+        document.getElementById('itemsContainer').innerHTML = '<p style="color:#e74c3c;">تنبيه: لم يتم العثور على data.json بنفس المجلد.</p>';
       });
 
     function loadAdminData() {
@@ -136,7 +138,7 @@
 
       if (!appData.items) appData.items = [];
 
-      const newObj = {
+      appData.items.push({
         id: Date.now(),
         name: name,
         category: cat,
@@ -144,9 +146,8 @@
         price: price,
         available: true,
         image: img
-      };
+      });
 
-      appData.items.push(newObj);
       renderItemsList();
 
       document.getElementById('newItemName').value = "";
@@ -155,7 +156,7 @@
       document.getElementById('newItemPrice').value = "";
       document.getElementById('newItemImgBase64').value = "";
       document.getElementById('fileStatusText').innerText = "اضغط هنا لاختيار صورة من استوديو الموبايل";
-      alert("تمت إضافة الصنف بنجاح!");
+      alert("تمت إضافة الصنف إلى القائمة! اضغط زر تنزيل data.json في الأسفل لرفعه إلى GitHub.");
     }
 
     function renderItemsList() {
@@ -163,25 +164,78 @@
       container.innerHTML = '';
 
       if (!appData.items || appData.items.length === 0) {
-        container.innerHTML = '<p style="color:#a4c2b2;">لا توجد أصناف حالياً. قم بإضافة صنف جديد أعلاه.</p>';
+        container.innerHTML = '<p style="color:#a4c2b2;">لا توجد أصناف حالياً.</p>';
         return;
       }
 
       appData.items.forEach((item, index) => {
         container.innerHTML += `
           <div class="item-card-admin">
-            <img src="${item.image}" class="preview-img" onerror="this.src='https://via.placeholder.com/65'">
-            <div style="flex:1;">
-              <strong style="font-size:1rem;">${item.name}</strong>
-              <div style="font-size:0.8rem; color:#ffe082;">${item.price} • ${item.category}</div>
+            <div class="item-row">
+              <img src="${item.image}" class="preview-img" onerror="this.src='https://via.placeholder.com/65'">
+              <div style="flex:1;">
+                <strong style="font-size:1rem;">${item.name}</strong>
+                <div style="font-size:0.8rem; color:#ffe082;">${item.price} • ${item.category}</div>
+              </div>
+              <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;">
+                <button class="btn btn-sm btn-blue" onclick="toggleEditForm(${index})">تعديل ✏️</button>
+                <button class="btn btn-sm ${item.available ? 'btn-green' : ''}" onclick="toggleAvail(${index})">${item.available ? 'متوفر' : 'غير متوفر'}</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteItem(${index})">حذف 🗑️</button>
+              </div>
             </div>
-            <div style="display:flex; gap:6px; flex-direction:column;">
-              <button class="btn btn-sm ${item.available ? 'btn-green' : ''}" onclick="toggleAvail(${index})">${item.available ? 'متوفر' : 'غير متوفر'}</button>
-              <button class="btn btn-sm btn-danger" onclick="deleteItem(${index})">حذف</button>
+
+            <!-- نموذج تعديل الصنف -->
+            <div class="edit-form" id="editForm_${index}">
+              <label>اسم الصنف:</label>
+              <input type="text" id="editName_${index}" value="${item.name}">
+              
+              <label>التصنيف:</label>
+              <input type="text" id="editCat_${index}" value="${item.category}">
+
+              <label>الوصف:</label>
+              <input type="text" id="editDesc_${index}" value="${item.description || ''}">
+
+              <label>السعر:</label>
+              <input type="text" id="editPrice_${index}" value="${item.price}">
+
+              <label>تغيير الصورة (اختر صورة جديدة أو اترك الحالية):</label>
+              <input type="file" accept="image/*" onchange="handleEditImageUpload(this, ${index})">
+
+              <div style="display:flex; gap:10px; margin-top:10px;">
+                <button class="btn btn-green btn-sm" onclick="saveItemEdit(${index})">حفظ التعديلات ✅</button>
+                <button class="btn btn-danger btn-sm" onclick="toggleEditForm(${index})">إلغاء</button>
+              </div>
             </div>
           </div>
         `;
       });
+    }
+
+    function toggleEditForm(index) {
+      const form = document.getElementById(`editForm_${index}`);
+      form.style.display = (form.style.display === "block") ? "none" : "block";
+    }
+
+    function handleEditImageUpload(input, index) {
+      const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          appData.items[index].image = e.target.result;
+          alert("تم اختيار الصورة الجديدة للصنف!");
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function saveItemEdit(index) {
+      appData.items[index].name = document.getElementById(`editName_${index}`).value.trim();
+      appData.items[index].category = document.getElementById(`editCat_${index}`).value.trim();
+      appData.items[index].description = document.getElementById(`editDesc_${index}`).value.trim();
+      appData.items[index].price = document.getElementById(`editPrice_${index}`).value.trim();
+
+      alert("تم حفظ التعديلات محلياً! اضغط على 'حفظ وتنزيل data.json' بالأسفل واستبدل الملف في GitHub.");
+      renderItemsList();
     }
 
     function toggleAvail(index) {
