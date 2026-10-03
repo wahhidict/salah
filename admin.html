@@ -7,45 +7,79 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
-    body { background: #081d13; color: white; padding: 20px; max-width: 800px; margin: 0 auto; }
-    h1 { color: #f39c12; margin-bottom: 10px; font-weight: 900; }
-    .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 18px; margin-bottom: 20px; }
+    body { background: #081d13; color: white; padding: 20px; max-width: 800px; margin: 0 auto; padding-bottom: 50px; }
+    h1 { color: #f39c12; margin-bottom: 8px; font-weight: 900; }
+    .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 18px; padding: 20px; margin-bottom: 22px; }
     label { display: block; font-size: 0.88rem; color: #ffe082; margin-bottom: 6px; font-weight: 700; }
-    input, textarea, select { width: 100%; padding: 10px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; color: white; margin-bottom: 12px; }
-    .btn { background: #f39c12; color: #05140d; font-weight: 800; padding: 10px 18px; border: none; border-radius: 10px; cursor: pointer; }
+    input, textarea, select { width: 100%; padding: 11px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; color: white; margin-bottom: 14px; font-size: 0.95rem; }
+    input:focus, textarea:focus, select:focus { border-color: #f39c12; outline: none; }
+    .btn { background: #f39c12; color: #05140d; font-weight: 800; padding: 10px 18px; border: none; border-radius: 12px; cursor: pointer; transition: 0.2s; }
     .btn-green { background: #27ae60; color: white; }
     .btn-danger { background: #c62828; color: white; }
-    .item-row { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .btn-sm { padding: 6px 12px; font-size: 0.82rem; }
+    
+    .item-card-admin { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 14px; margin-bottom: 12px; display: flex; gap: 12px; align-items: center; justify-content: space-between; }
+    .preview-img { width: 65px; height: 65px; border-radius: 10px; object-fit: cover; background: #222; }
+    
+    .upload-box { background: rgba(243, 156, 18, 0.1); border: 2px dashed #f39c12; padding: 15px; text-align: center; border-radius: 12px; cursor: pointer; margin-bottom: 14px; }
   </style>
 </head>
 <body>
 
   <h1>لوحة إدارة المنيو 🛠️</h1>
-  <p style="color: #a4c2b2; margin-bottom: 20px;">عدّل البيانات أو الأصناف، ثم اضغط "تحميل ملف data.json الجديد" وارفعه إلى GitHub.</p>
+  <p style="color: #a4c2b2; margin-bottom: 20px; font-size: 0.9rem;">يمكنك تعديل المنيو وإضافة الأصناف ورفع الصور مباشرة من هاتفك، ثم تنزيل ملف data.json واستبداله في GitHub.</p>
 
+  <!-- إعدادات المحل العامة -->
   <div class="card">
-    <h3>إعدادات المحل العامة</h3>
-    <br>
+    <h3 style="color:#ffe082; margin-bottom:12px;">1️⃣ الإعدادات العامة</h3>
     <label>رقم الواتساب (مع رمز الدولة):</label>
     <input type="text" id="waNum">
 
     <label>رقم الاتصال المباشر:</label>
     <input type="text" id="phoneNum">
 
-    <label>نص الحالة (مثل: مفتوح الآن):</label>
+    <label>حالة المحل (مثل: مفتوح الآن • خدمة توصيل):</label>
     <input type="text" id="statusTxt">
 
     <label>نص الشريط المتحرك:</label>
     <input type="text" id="tickerTxt">
   </div>
 
+  <!-- إضافة صنف جديد -->
   <div class="card">
-    <h3>الأصناف والأسعار</h3>
-    <div id="itemsContainer"></div>
+    <h3 style="color:#ffe082; margin-bottom:12px;">2️⃣ إضافة صنف جديد للمنيو</h3>
+    
+    <label>اسم الصنف:</label>
+    <input type="text" id="newItemName" placeholder="مثال: كوكتيل امبراطور">
+
+    <label>التصنيف:</label>
+    <input type="text" id="newItemCat" placeholder="مثال: كوكتيلات أبو صلاح">
+
+    <label>الوصف والمكونات:</label>
+    <input type="text" id="newItemDesc" placeholder="مثال: فواكه، قشطة، عسل ومكسرات">
+
+    <label>السعر:</label>
+    <input type="text" id="newItemPrice" placeholder="مثال: 35,000 ل.س">
+
+    <label>اختيار صورة للصنف من الموبايل أو الجهاز 📸:</label>
+    <div class="upload-box" onclick="document.getElementById('newItemImgFile').click()">
+      <span id="fileStatusText">اضغط هنا لاختيار صورة من استوديو الموبايل</span>
+      <input type="file" id="newItemImgFile" accept="image/*" style="display:none;" onchange="handleImageUpload(this)">
+    </div>
+    <input type="hidden" id="newItemImgBase64">
+
+    <button class="btn btn-green" style="width: 100%; padding: 12px;" onclick="addNewItem()">+ إضافة الصنف للمنيو</button>
   </div>
 
-  <button class="btn btn-green" style="width: 100%; padding: 16px; font-size: 1.1rem;" onclick="downloadJSON()">
-    💾 تحميل ملف data.json المُحدث
+  <!-- قائمة الأصناف والتعديل -->
+  <div class="card">
+    <h3 style="color:#ffe082; margin-bottom:15px;">3️⃣ الأصناف الموجودة حالياً</h3>
+    <div id="itemsContainer">جاري التحميل...</div>
+  </div>
+
+  <!-- زر التنزيل النهائي -->
+  <button class="btn btn-green" style="width: 100%; padding: 18px; font-size: 1.15rem; box-shadow: 0 10px 20px rgba(39, 174, 96, 0.4);" onclick="downloadJSON()">
+    💾 حفظ وتنزيل ملف data.json الجديد
   </button>
 
   <script>
@@ -64,17 +98,72 @@
       document.getElementById('statusTxt').value = appData.status_text || "";
       document.getElementById('tickerTxt').value = appData.ticker_text || "";
 
+      renderItemsList();
+    }
+
+    function handleImageUpload(input) {
+      const file = input.files[0];
+      if (file) {
+        document.getElementById('fileStatusText').innerText = "جاري معالجة الصورة: " + file.name;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('newItemImgBase64').value = e.target.result;
+          document.getElementById('fileStatusText').innerText = "تم اختيار الصورة بنجاح ✅";
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function addNewItem() {
+      const name = document.getElementById('newItemName').value.trim();
+      const cat = document.getElementById('newItemCat').value.trim();
+      const desc = document.getElementById('newItemDesc').value.trim();
+      const price = document.getElementById('newItemPrice').value.trim();
+      const img = document.getElementById('newItemImgBase64').value || "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=600&q=80";
+
+      if(!name || !cat || !price) {
+        alert("يرجى إدخال اسم الصنف والتصنيف والسعر على الأقل");
+        return;
+      }
+
+      const newObj = {
+        id: Date.now(),
+        name: name,
+        category: cat,
+        description: desc,
+        price: price,
+        available: true,
+        image: img
+      };
+
+      appData.items.push(newObj);
+      renderItemsList();
+
+      // مسح المدخلات
+      document.getElementById('newItemName').value = "";
+      document.getElementById('newItemCat').value = "";
+      document.getElementById('newItemDesc').value = "";
+      document.getElementById('newItemPrice').value = "";
+      document.getElementById('newItemImgBase64').value = "";
+      document.getElementById('fileStatusText').innerText = "اضغط هنا لاختيار صورة من استوديو الموبايل";
+      alert("تمت إضافة الصنف بنجاح!");
+    }
+
+    function renderItemsList() {
       const container = document.getElementById('itemsContainer');
       container.innerHTML = '';
 
       appData.items.forEach((item, index) => {
         container.innerHTML += `
-          <div class="item-row">
-            <div>
-              <strong>${item.name}</strong> - <span style="color:#f39c12">${item.price}</span> (${item.category})
+          <div class="item-card-admin">
+            <img src="${item.image}" class="preview-img">
+            <div style="flex:1;">
+              <strong style="font-size:1rem;">${item.name}</strong>
+              <div style="font-size:0.8rem; color:#ffe082;">${item.price} • ${item.category}</div>
             </div>
-            <div>
-              <button class="btn" onclick="toggleAvail(${index})">${item.available ? 'تعطيل' : 'تفعيل'}</button>
+            <div style="display:flex; gap:6px; flex-direction:column;">
+              <button class="btn btn-sm ${item.available ? 'btn-green' : ''}" onclick="toggleAvail(${index})">${item.available ? 'متوفر' : 'غير متوفر'}</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteItem(${index})">حذف</button>
             </div>
           </div>
         `;
@@ -83,7 +172,14 @@
 
     function toggleAvail(index) {
       appData.items[index].available = !appData.items[index].available;
-      loadAdminData();
+      renderItemsList();
+    }
+
+    function deleteItem(index) {
+      if(confirm('هل أنت تأكد من حذف هذا الصنف؟')) {
+        appData.items.splice(index, 1);
+        renderItemsList();
+      }
     }
 
     function downloadJSON() {
