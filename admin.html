@@ -83,13 +83,21 @@
   </button>
 
   <script>
-    let appData = {};
+    let appData = { items: [] };
 
-    fetch('../data.json')
-      .then(res => res.json())
+    // جلب ملف data.json من نفس المجلد
+    fetch('data.json')
+      .then(res => {
+        if (!res.ok) throw new Error('تعذر جلب الملف');
+        return res.json();
+      })
       .then(data => {
         appData = data;
         loadAdminData();
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById('itemsContainer').innerHTML = '<p style="color:#e74c3c;">تنبيه: لم يتم العثور على data.json بنفس المجلد. يمكنك إضافة الأصناف وحفظ الملف جديداً.</p>';
       });
 
     function loadAdminData() {
@@ -126,6 +134,8 @@
         return;
       }
 
+      if (!appData.items) appData.items = [];
+
       const newObj = {
         id: Date.now(),
         name: name,
@@ -139,7 +149,6 @@
       appData.items.push(newObj);
       renderItemsList();
 
-      // مسح المدخلات
       document.getElementById('newItemName').value = "";
       document.getElementById('newItemCat').value = "";
       document.getElementById('newItemDesc').value = "";
@@ -153,10 +162,15 @@
       const container = document.getElementById('itemsContainer');
       container.innerHTML = '';
 
+      if (!appData.items || appData.items.length === 0) {
+        container.innerHTML = '<p style="color:#a4c2b2;">لا توجد أصناف حالياً. قم بإضافة صنف جديد أعلاه.</p>';
+        return;
+      }
+
       appData.items.forEach((item, index) => {
         container.innerHTML += `
           <div class="item-card-admin">
-            <img src="${item.image}" class="preview-img">
+            <img src="${item.image}" class="preview-img" onerror="this.src='https://via.placeholder.com/65'">
             <div style="flex:1;">
               <strong style="font-size:1rem;">${item.name}</strong>
               <div style="font-size:0.8rem; color:#ffe082;">${item.price} • ${item.category}</div>
