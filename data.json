@@ -14,7 +14,6 @@
       "description": "طبقات فواكه استوائية طازجة + قشطة بلدية + عسل جبال + مكسرات مشكلة",
       "price": "35,000 ل.س",
       "available": true,
-      "badge": "الأكثر طلباً ⭐",
       "image": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=600&q=80"
     },
     {
@@ -24,88 +23,34 @@
       "description": "أفوكادو مهروس طازج مع المانجو والقشطة البلدية والعسل والمكسرات",
       "price": "38,000 ل.س",
       "available": true,
-      "badge": "توصية الشيف 👑",
       "image": "https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=600&q=80"
     },
     {
       "id": 3,
-      "name": "كوكتيل فواكه الحارة",
-      "category": "كوكتيلات أبو صلاح",
-      "description": "خلطة فريز، موز، وكيوى مع طبق قشطة وعسل وفستق حلبي",
-      "price": "32,000 ل.س",
-      "available": true,
-      "badge": "",
-      "image": "https://images.unsplash.com/photo-1502741224143-90386d7f8c82?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "id": 4,
       "name": "عصير برتقال طبيعي",
       "category": "عصائر طازجة 100%",
       "description": "برتقال معصور طازج فور الطلب بدون أي إضافات أو سكر",
       "price": "18,000 ل.س",
       "available": true,
-      "badge": "فريش",
       "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=80"
     },
     {
-      "id": 5,
+      "id": 4,
       "name": "عصير ليمون بالنعناع (ليموناضة)",
       "category": "عصائر طازجة 100%",
       "description": "ليمون طازج مع أوراق النعناع البلدية والثلج المجروش",
       "price": "16,000 ل.س",
       "available": true,
-      "badge": "منعش ❄️",
       "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"
     },
     {
-      "id": 6,
-      "name": "عصير رمان بلدي",
-      "category": "عصائر طازجة 100%",
-      "description": "عصير رمان طبيعي طازج بدون سكر مضاف",
-      "price": "22,000 ل.س",
-      "available": true,
-      "badge": "",
-      "image": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "id": 7,
+      "id": 5,
       "name": "سلطة فواكه بالقشطة والعسل",
       "category": "سلطات فواكه وقشطة",
-      "description": "قطع موز، فريز، تفاح، كيوي، واناناس مغطاة بوجبة قشطة بلدية وفاخرة مع عسل ومكسرات",
+      "description": "قطع موز، فريز، تفاح، كيوي، واناناس مغطاة بوجبة قشطة بلدية وفاخرة",
       "price": "40,000 ل.س",
       "available": true,
-      "badge": "طبق فاخر",
       "image": "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "id": 8,
-      "name": "صحن غزل البنات بالفواكه والقشطة",
-      "category": "سلطات فواكه وقشطة",
-      "description": "غزل بنات شامية دمشقية مع الفواكه المقطعة والقشطة البلدية والفستق الشامي",
-      "price": "42,000 ل.س",
-      "available": true,
-      "badge": "شامي أصيل",
-      "image": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "id": 9,
-      "name": "ميلك شيك أوريو بالكريمة",
-      "category": "ميلك شيك وبارد",
-      "description": "حليب طازج مع بكسويت أوريو وآيس كريم فانيليا وكريمة مخفوقة",
-      "price": "25,000 ل.س",
-      "available": true,
-      "badge": "",
-      "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      "id": 10,
-      "name": "سموذي مانجو وفاكهة الاستوائية",
-      "category": "ميلك شيك وبارد",
-      "description": "خلطة سموذي مانجو مثلجة ومخفوقة بعناية",
-      "price": "24,000 ل.س",
-      "available": true,
-      "badge": "",
-      "image": "https://images.unsplash.com/photo-1505252585461-04db1eb84625?auto=format&fit=crop&w=600&q=80"
     }
   ]
 }
