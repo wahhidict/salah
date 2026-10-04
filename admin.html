@@ -65,9 +65,19 @@ select option{background:#04160e;color:#fff}
 .size-info.danger{color:#e74c3c;font-weight:900}
 
 .delivery-section{background:rgba(52,152,219,.06);border:1px solid rgba(52,152,219,.25);border-radius:14px;padding:14px;margin-top:8px}
-.delivery-section .mode-pills{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.delivery-section .mode-pills button{flex:1;min-width:100px;padding:11px;border-radius:12px;border:1px solid var(--bd);background:var(--glass);color:var(--sub);font-weight:800;font-size:.82rem;cursor:pointer;font-family:inherit;transition:.2s}
-.delivery-section .mode-pills button.active{background:linear-gradient(135deg,var(--gold),#c98a1f);color:#061c11;border-color:var(--gold)}
+.mode-pills{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.mode-pills button{flex:1;min-width:100px;padding:11px;border-radius:12px;border:1px solid var(--bd);background:var(--glass);color:var(--sub);font-weight:800;font-size:.82rem;cursor:pointer;font-family:inherit;transition:.2s}
+.mode-pills button.active{background:linear-gradient(135deg,var(--gold),#c98a1f);color:#061c11;border-color:var(--gold)}
+
+.theme-pills{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.theme-pills button{padding:14px 10px;font-size:.85rem;line-height:1.4;display:flex;flex-direction:column;gap:4px;align-items:center;border-radius:12px;border:1px solid var(--bd);background:var(--glass);color:var(--sub);font-weight:800;cursor:pointer;font-family:inherit;transition:.2s}
+.theme-pills button.active{background:linear-gradient(135deg,var(--gold),#c98a1f);color:#061c11;border-color:var(--gold)}
+.theme-pills button .emoji{font-size:1.6rem}
+
+.qr-box{background:#fff;padding:20px;border-radius:14px;text-align:center;margin-bottom:12px}
+.qr-box img{max-width:100%;width:260px;height:260px;border-radius:10px;display:block;margin:0 auto}
+.qr-url{font-size:.72rem;color:var(--sub);margin-top:10px;word-break:break-all;text-align:center;background:rgba(0,0,0,.3);padding:8px 10px;border-radius:8px}
+
 .hide{display:none!important}
 .footer{text-align:center;margin-top:26px}
 .footer button{background:none;border:none;color:var(--sub);text-decoration:underline;font-size:.75rem;cursor:pointer;font-family:inherit}
@@ -106,28 +116,48 @@ select option{background:#04160e;color:#fff}
   </div>
 
   <div class="card">
+    <h2>🎨 الثيم الموسمي</h2>
+    <p style="font-size:.8rem;color:var(--sub);margin-bottom:14px">اختر ثيم يظهر تلقائيًا لكل الزبائن — يُحفظ ويُنشر فورًا.</p>
+    <div class="theme-pills" id="themePills">
+      <button data-theme="default"><span class="emoji">✨</span>عادي</button>
+      <button data-theme="ramadan"><span class="emoji">🌙</span>رمضان</button>
+      <button data-theme="eid"><span class="emoji">🎉</span>عيد</button>
+      <button data-theme="summer"><span class="emoji">☀️</span>صيف</button>
+      <button data-theme="winter"><span class="emoji">❄️</span>شتاء</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📱 رمز QR للمنيو</h2>
+    <p style="font-size:.8rem;color:var(--sub);margin-bottom:14px">اطبع الرمز وضعه على الطاولات — الزبون يمسحه ويفتح المنيو مباشرة.</p>
+    <div class="qr-box">
+      <img id="qrImg" alt="QR Code" src="">
+    </div>
+    <div class="qr-url" id="qrUrl">جاري التوليد...</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+      <button class="btn btn-blue" onclick="downloadQR()" style="flex:1">⬇️ تنزيل الصورة</button>
+      <button class="btn btn-green" onclick="openMenuPage()" style="flex:1">🔗 فتح الموقع</button>
+    </div>
+  </div>
+
+  <div class="card">
     <h2>🛵 إعدادات التوصيل</h2>
     <p style="font-size:.8rem;color:var(--sub);margin-bottom:12px">اختر كيف يتعامل الموقع مع رسوم التوصيل:</p>
-
     <div class="delivery-section">
       <div class="mode-pills" id="modePills">
         <button data-mode="free">🎉 مجاني</button>
         <button data-mode="fixed">💰 سعر ثابت</button>
         <button data-mode="message">💬 رسالة للمنطقة</button>
       </div>
-
       <div id="fixedBlock" class="hide">
         <label>سعر التوصيل الثابت (بالليرة):</label>
         <input type="text" id="deliveryPrice" placeholder="مثال: 15000" inputmode="numeric">
-        <p style="font-size:.72rem;color:var(--sub);margin-top:-6px">يُضاف تلقائياً إلى إجمالي كل طلب توصيل.</p>
       </div>
-
       <div id="messageBlock" class="hide">
         <label>نص رسالة التوصيل (تظهر للزبون):</label>
-        <textarea id="deliveryMessage" placeholder="مثال: قيمة التوصيل تُحدد حسب المنطقة — سنخبرك عبر واتساب"></textarea>
+        <textarea id="deliveryMessage" placeholder="قيمة التوصيل تُحدد حسب المنطقة"></textarea>
       </div>
     </div>
-
     <button class="btn btn-gold btn-full" id="saveSettingsBtn" onclick="saveSettings()" style="margin-top:14px">⚡ حفظ كل الإعدادات</button>
   </div>
 
@@ -143,7 +173,7 @@ select option{background:#04160e;color:#fff}
     <label>السعر *</label>
     <input type="text" id="nPrice" placeholder="35,000 ل.س">
     <label>صورة الصنف *</label>
-    <div class="upload" id="uploadBox" onclick="document.getElementById('nImg').click()">
+    <div class="upload" onclick="document.getElementById('nImg').click()">
       <span id="uploadText">📸 اضغط لاختيار صورة (تُضغط تلقائياً)</span>
       <input type="file" id="nImg" accept="image/*" style="display:none" onchange="handleNewImage(this)">
     </div>
@@ -172,6 +202,7 @@ const FILE_PATH     = "data.json";
 let appData = { items: [] };
 let isSaving = false;
 let currentMode = 'message';
+let currentTheme = 'default';
 
 const $  = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
@@ -188,6 +219,38 @@ function toast(msg, err=false){
   toastT = setTimeout(()=>t.classList.remove('show'), 3500);
 }
 
+/* ============ QR Code ============ */
+function buildMenuUrl(){
+  return window.location.href.split('?')[0].replace(/[^/]*$/,'') + 'index.html';
+}
+function initQR(){
+  const url = buildMenuUrl();
+  $('#qrUrl').innerText = url;
+  $('#qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&margin=10&data=${encodeURIComponent(url)}`;
+}
+async function downloadQR(){
+  const src = $('#qrImg').src;
+  try{
+    const r = await fetch(src);
+    const b = await r.blob();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(b);
+    a.download = 'menu-qr.png';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(a.href);
+    toast('✅ تم تنزيل QR');
+  }catch(e){
+    window.open(src, '_blank');
+    toast('اضغط مطوّلاً على الصورة لحفظها');
+  }
+}
+function openMenuPage(){
+  window.open(buildMenuUrl(), '_blank');
+}
+
+/* ============ التوكن ============ */
 function checkToken(){
   const t = localStorage.getItem('gh_token');
   $('#tokenSection').style.display = t ? 'none' : 'block';
@@ -207,6 +270,7 @@ function tokenExpired(){
   checkToken();
 }
 
+/* ============ جلب البيانات ============ */
 async function loadData(){
   const ts = Date.now();
   const sources = [
@@ -236,8 +300,9 @@ function fillForm(){
   $('#statusTxt').value = appData.status_text     || '';
   $('#tickerTxt').value = appData.ticker_text     || '';
   $('#deliveryPrice').value   = appData.delivery_price   || '';
-  $('#deliveryMessage').value = appData.delivery_message || '🛵 قيمة التوصيل تُحدد حسب المنطقة — سنخبرك بالتفاصيل عبر واتساب';
+  $('#deliveryMessage').value = appData.delivery_message || '🛵 قيمة التوصيل تُحدد حسب المنطقة';
   setDeliveryMode(appData.delivery_mode || 'message');
+  setTheme(appData.theme || 'default');
 }
 
 function setDeliveryMode(mode){
@@ -248,6 +313,20 @@ function setDeliveryMode(mode){
 }
 $$('#modePills button').forEach(b => {
   b.onclick = () => setDeliveryMode(b.dataset.mode);
+});
+
+function setTheme(theme){
+  currentTheme = theme;
+  $$('#themePills button').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
+}
+$$('#themePills button').forEach(b => {
+  b.onclick = async () => {
+    if(b.dataset.theme === currentTheme) return;
+    setTheme(b.dataset.theme);
+    appData.theme = b.dataset.theme;
+    const ok = await saveToGitHub(`تغيير الثيم: ${b.dataset.theme}`);
+    if(ok) toast('✅ تم تطبيق الثيم');
+  };
 });
 
 async function saveToGitHub(msg, retry=0){
@@ -268,7 +347,6 @@ async function saveToGitHub(msg, retry=0){
 
     const json = JSON.stringify(appData, null, 2);
     const b64 = btoa(unescape(encodeURIComponent(json)));
-
     const body = { message: msg || 'تحديث', content: b64, branch: GITHUB_BRANCH };
     if(sha) body.sha = sha;
 
@@ -373,14 +451,14 @@ function renderItems(){
         <div class="item-row">
           <img src="${escAttr(it.image)}" onerror="this.src='https://placehold.co/60/0a2b1a/f5b041?text=%D8%B5%D9%88%D8%B1%D8%A9'">
           <div class="item-info">
-            <div class="name">${esc(it.name)}</div>
+            <div class="name">${esc(it.name)} ${it.featured?'⭐':''}</div>
             <div class="meta">${esc(it.price)} <span class="cat">• ${esc(it.category)}</span></div>
           </div>
         </div>
         <div class="item-actions">
           <button class="btn btn-sm btn-blue" onclick="toggleEdit(${i})">تعديل ✏️</button>
-          <button class="btn btn-sm ${it.available?'btn-green':''}" onclick="toggleAvail(${i})">${it.available?'متوفر ✓':'نفذ ✗'}</button>
-          <button class="btn btn-sm" style="background:rgba(255,255,255,.1);color:#fff" onclick="duplicate(${i})">نسخ 📋</button>
+          <button class="btn btn-sm ${it.available?'btn-green':''}" style="${it.available?'':'background:rgba(255,255,255,.1);color:#fff'}" onclick="toggleAvail(${i})">${it.available?'متوفر ✓':'نفذ ✗'}</button>
+          <button class="btn btn-sm ${it.featured?'btn-gold':''}" style="${it.featured?'':'background:rgba(255,255,255,.1);color:#fff'}" onclick="toggleFeatured(${i})">${it.featured?'⭐ الأكثر طلباً':'☆ تمييز'}</button>
           <button class="btn btn-sm btn-red" onclick="delItem(${i})">حذف 🗑️</button>
         </div>
         <div class="edit-form" id="ef_${i}">
@@ -409,7 +487,7 @@ function renderItems(){
   const kb = Math.round(JSON.stringify(appData).length / 1024);
   const el = $('#sizeInfo');
   el.className = 'size-info';
-  el.innerText = `حجم data.json: ${kb} KB`;
+  el.innerText = `حجم data.json: ${kb} KB — عدد الأصناف: ${appData.items.length}`;
   if(kb > 900){ el.classList.add('danger'); el.innerText += ' — ⚠️ اقتربت من الحد!'; }
   else if(kb > 600){ el.classList.add('warn'); el.innerText += ' — كبير نسبياً'; }
 }
@@ -438,11 +516,9 @@ async function toggleAvail(i){
   const ok = await saveToGitHub(`حالة: ${appData.items[i].name}`);
   if(ok) renderItems();
 }
-async function duplicate(i){
-  const src = appData.items[i];
-  const copy = { ...src, id: Date.now(), name: src.name + ' (نسخة)' };
-  appData.items.splice(i+1, 0, copy);
-  const ok = await saveToGitHub(`نسخ: ${src.name}`);
+async function toggleFeatured(i){
+  appData.items[i].featured = !appData.items[i].featured;
+  const ok = await saveToGitHub(`${appData.items[i].featured?'تمييز':'إلغاء تمييز'}: ${appData.items[i].name}`);
   if(ok) renderItems();
 }
 async function delItem(i){
@@ -461,14 +537,19 @@ async function saveSettings(){
   appData.delivery_mode   = currentMode;
   appData.delivery_price  = $('#deliveryPrice').value.trim() || '0';
   appData.delivery_message = $('#deliveryMessage').value.trim() || '🛵 قيمة التوصيل تُحدد حسب المنطقة';
+  appData.theme           = currentTheme;
 
   const b = $('#saveSettingsBtn');
   b.disabled = true; b.innerText = '⏳ جاري النشر...';
-  await saveToGitHub('تحديث الإعدادات والتوصيل');
+  await saveToGitHub('تحديث الإعدادات والتوصيل والثيم');
   b.disabled = false; b.innerText = '⚡ حفظ كل الإعدادات';
 }
 
-document.addEventListener('DOMContentLoaded', () => { checkToken(); loadData(); });
+document.addEventListener('DOMContentLoaded', () => {
+  checkToken();
+  initQR();
+  loadData();
+});
 </script>
 </body>
 </html>
