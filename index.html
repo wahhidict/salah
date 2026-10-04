@@ -9,63 +9,44 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --black:#050505;--black-2:#0d0d0d;--black-3:#141414;
-  --gold:#c9a227;--gold-2:#e6c45c;--gold-3:#8b6914;
-  --gold-glow:rgba(201,162,39,.25);
-  --green:#1a3a2a;--green-2:#2d5a3d;--green-accent:#4ade80;
-  --orange:#e67e22;--orange-2:#f39c12;
-  --txt:#f5f0e8;--txt-sub:#a89f8e;
-  --glass:rgba(255,255,255,.03);--glass-2:rgba(255,255,255,.06);
-  --bd:rgba(201,162,39,.15);--bd-2:rgba(201,162,39,.3);
-  --card:rgba(13,13,13,.85);
-  --shadow:0 20px 60px rgba(0,0,0,.7);
-}
+:root{--black:#050505;--black-2:#0d0d0d;--black-3:#141414;--gold:#c9a227;--gold-2:#e6c45c;--gold-3:#8b6914;--gold-glow:rgba(201,162,39,.25);--green:#1a3a2a;--green-2:#2d5a3d;--green-accent:#4ade80;--orange:#e67e22;--orange-2:#f39c12;--txt:#f5f0e8;--txt-sub:#a89f8e;--glass:rgba(255,255,255,.03);--glass-2:rgba(255,255,255,.06);--bd:rgba(201,162,39,.15);--bd-2:rgba(201,162,39,.3);--card:rgba(13,13,13,.85);--shadow:0 20px 60px rgba(0,0,0,.7)}
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif;-webkit-tap-highlight-color:transparent}
 html,body{overflow-x:hidden}
 body{background:var(--black);color:var(--txt);min-height:100vh;padding-bottom:160px;-webkit-font-smoothing:antialiased;position:relative}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(ellipse 800px 400px at 50% -10%,rgba(201,162,39,.06),transparent 70%),radial-gradient(ellipse 600px 300px at 100% 110%,rgba(26,58,42,.15),transparent 70%)}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l7.5 15 16.5 2.4-12 11.7 2.8 16.5L30 38.1l-14.8 7.5 2.8-16.5-12-11.7 16.5-2.4z' fill='none' stroke='%23c9a227' stroke-width='.5'/%3E%3C/svg%3E");background-size:60px 60px}
 body>*:not(.overlay):not(.cart-panel):not(.modal):not(.toast):not(.refresh){position:relative;z-index:1}
-
 .hdr{position:sticky;top:0;z-index:80;background:linear-gradient(180deg,rgba(5,5,5,.97),rgba(5,5,5,.85));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);padding:18px 16px 14px;box-shadow:0 4px 30px rgba(0,0,0,.5)}
 .hdr-top{display:flex;justify-content:space-between;align-items:center;gap:12px;max-width:900px;margin:0 auto}
 .brand-wrap{display:flex;align-items:center;gap:12px}
 .brand-icon{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--gold-2),var(--gold-3));display:grid;place-items:center;font-size:1.3rem;box-shadow:0 0 20px var(--gold-glow);border:1px solid rgba(255,255,255,.1)}
 .brand{font-family:'Amiri',serif;font-size:1.35rem;font-weight:700;line-height:1.2;background:linear-gradient(135deg,var(--gold-2),var(--gold),var(--gold-3));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .brand small{display:block;font-family:'Tajawal',sans-serif;font-size:.6rem;font-weight:500;color:var(--txt-sub);-webkit-text-fill-color:var(--txt-sub);letter-spacing:2px;margin-top:2px;text-transform:uppercase}
-
 .hdr-right{display:flex;align-items:center;gap:8px}
 .status-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:100px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);color:var(--green-accent);font-size:.75rem;font-weight:800;white-space:nowrap;letter-spacing:.3px}
 .status-pill.closed{background:rgba(192,57,43,.1);border-color:rgba(192,57,43,.3);color:#e74c3c}
 .dot{width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor;animation:pulse 1.8s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-
 .refresh-btn{width:38px;height:38px;border-radius:12px;background:var(--glass);border:1px solid var(--bd);color:var(--gold-2);display:grid;place-items:center;cursor:pointer;font-size:1rem;transition:.2s}
 .refresh-btn:active{transform:scale(.9);background:rgba(201,162,39,.15)}
 .refresh-btn.spin{animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 .ticker-wrap{background:linear-gradient(90deg,transparent,rgba(201,162,39,.08),transparent);border-bottom:1px solid rgba(201,162,39,.12);color:var(--gold-2);font-weight:600;font-size:.78rem;padding:10px 0;overflow:hidden;white-space:nowrap;letter-spacing:.5px}
 .ticker{display:inline-block;padding-inline-start:100%;animation:marquee 30s linear infinite}
 @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
-
 .wrap{max-width:900px;margin:0 auto;padding:20px 16px}
 .search{position:relative;margin-bottom:20px}
 .search svg{position:absolute;top:50%;right:16px;transform:translateY(-50%);opacity:.35;color:var(--gold)}
 .search input{width:100%;padding:15px 48px 15px 18px;background:var(--glass);border:1px solid var(--bd);border-radius:16px;color:var(--txt);font-size:.9rem;outline:none;transition:.3s;letter-spacing:.3px;font-family:'Tajawal',sans-serif}
 .search input:focus{border-color:var(--gold);box-shadow:0 0 0 4px var(--gold-glow);background:rgba(201,162,39,.04)}
 .search input::placeholder{color:var(--txt-sub);font-weight:500}
-
 .cats{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 12px;margin-bottom:20px;scrollbar-width:none}
 .cats::-webkit-scrollbar{display:none}
 .cat{padding:10px 22px;border-radius:100px;white-space:nowrap;cursor:pointer;background:transparent;border:1px solid var(--bd);color:var(--txt-sub);font-weight:700;font-size:.82rem;transition:.3s;letter-spacing:.3px;font-family:'Tajawal',sans-serif}
 .cat.active{background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--black);border-color:var(--gold);box-shadow:0 8px 24px var(--gold-glow);font-weight:900}
-
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 @media(min-width:640px){.grid{grid-template-columns:repeat(3,1fr);gap:18px}}
 @media(min-width:900px){.grid{grid-template-columns:repeat(4,1fr);gap:20px}}
-
 .card{background:var(--card);border:1px solid var(--bd);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:transform .3s,box-shadow .3s,border-color .3s;cursor:pointer;position:relative}
 .card:active{transform:scale(.97)}
 .card:hover{border-color:var(--bd-2);box-shadow:var(--shadow),0 0 40px rgba(201,162,39,.08)}
@@ -85,8 +66,7 @@ body>*:not(.overlay):not(.cart-panel):not(.modal):not(.toast):not(.refresh){posi
 .qty-mini{display:flex;align-items:center;gap:5px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.25);border-radius:12px;padding:2px}
 .qty-mini button{background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--black);border:none;width:28px;height:28px;border-radius:9px;font-weight:900;font-size:1rem;cursor:pointer;display:grid;place-items:center}
 .qty-mini span{font-weight:900;font-size:.85rem;min-width:18px;text-align:center;color:var(--gold-2)}
-
-.cart-bar{position:fixed !important;bottom:0 !important;left:0 !important;right:0 !important;max-width:900px;margin:0 auto;background:linear-gradient(135deg,var(--green),#0f2419);border-top:1px solid rgba(201,162,39,.4);color:#fff;padding:14px 18px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-between;align-items:center;box-shadow:0 -10px 40px rgba(0,0,0,.7);z-index:9999;cursor:pointer}
+.cart-bar{position:fixed!important;bottom:0!important;left:0!important;right:0!important;max-width:900px;margin:0 auto;background:linear-gradient(135deg,var(--green),#0f2419);border-top:1px solid rgba(201,162,39,.4);color:#fff;padding:14px 18px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-between;align-items:center;box-shadow:0 -10px 40px rgba(0,0,0,.7);z-index:9999;cursor:pointer}
 .cart-bar:active{opacity:.95}
 .cart-bar.empty{background:linear-gradient(135deg,#132b1e,#081810)}
 .cart-bar-left{display:flex;align-items:center;gap:10px;font-weight:800}
@@ -98,10 +78,8 @@ body>*:not(.overlay):not(.cart-panel):not(.modal):not(.toast):not(.refresh){posi
 .cart-bar-right .go{background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--black);padding:10px 18px;border-radius:12px;font-weight:900;font-size:.85rem;white-space:nowrap}
 .cart-bar.empty .cart-bar-right .total{display:none}
 .cart-bar.empty .cart-bar-right .go{background:rgba(255,255,255,.12);color:var(--gold-2);border:1px solid rgba(201,162,39,.3)}
-
 @keyframes bump{0%{transform:scale(1)}30%{transform:scale(1.03)}100%{transform:scale(1)}}
 .cart-bar.bump{animation:bump .35s ease}
-
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:.35s;z-index:10000}
 .overlay.show{opacity:1;pointer-events:auto}
 .cart-panel{position:fixed;inset:auto 0 0 0;height:92vh;max-height:92vh;z-index:10001;background:linear-gradient(180deg,var(--black-2),var(--black));border-top-left-radius:28px;border-top-right-radius:28px;border-top:1px solid var(--bd-2);transform:translateY(100%);transition:transform .4s cubic-bezier(.25,.9,.3,1);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 -30px 80px rgba(0,0,0,.8)}
@@ -117,7 +95,6 @@ body>*:not(.overlay):not(.cart-panel):not(.modal):not(.toast):not(.refresh){posi
 .panel-summary .s-count strong{background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--black);padding:2px 10px;border-radius:8px;font-size:.85rem;font-weight:900}
 .panel-summary .s-total{font-size:1.05rem;color:#fff;font-weight:900;letter-spacing:.3px}
 .panel-body{padding:16px 20px 8px}
-
 .cart-item{display:flex;gap:12px;align-items:center;padding:12px;background:var(--glass);border:1px solid var(--bd);border-radius:16px;margin-bottom:10px}
 .cart-item img{width:56px;height:56px;border-radius:12px;object-fit:cover;background:var(--black-2);flex-shrink:0}
 .cart-item .info{flex:1;min-width:0}
@@ -146,7 +123,6 @@ body>*:not(.overlay):not(.cart-panel):not(.modal):not(.toast):not(.refresh){posi
 .delivery-info .ico{font-size:1.4rem;flex-shrink:0}
 .delivery-info.free{background:linear-gradient(135deg,rgba(74,222,128,.1),rgba(74,222,128,.03));border-color:rgba(74,222,128,.3);color:#a9dfbf}
 .delivery-info.fixed{background:linear-gradient(135deg,var(--gold-glow),rgba(201,162,39,.05));border-color:var(--bd-2);color:var(--gold-2)}
-
 .panel-footer{flex-shrink:0;padding:14px 22px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,rgba(13,13,13,.95),#050505);border-top:1px solid var(--bd-2);box-shadow:0 -10px 30px rgba(0,0,0,.7)}
 .footer-totals{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:.85rem;color:var(--txt-sub);font-weight:700}
 .footer-totals .sub-row{display:flex;justify-content:space-between;width:100%}
@@ -155,17 +131,13 @@ body>*:not(.overlay):not(.cart-panel):not(.modal):not(.toast):not(.refresh){posi
 .send-btn{width:100%;padding:16px;border-radius:16px;border:none;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;font-weight:900;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 12px 30px rgba(37,211,102,.35);transition:transform .15s;font-family:'Tajawal',sans-serif;letter-spacing:.3px}
 .send-btn:active{transform:scale(.98)}
 .send-btn:disabled{opacity:.4;cursor:not-allowed}
-
 .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);background:linear-gradient(135deg,var(--green-2),var(--green));color:#fff;padding:14px 24px;border-radius:14px;font-weight:800;font-size:.85rem;box-shadow:0 16px 40px rgba(0,0,0,.6);z-index:20000;opacity:0;transition:.4s;pointer-events:none;border:1px solid rgba(74,222,128,.3);max-width:calc(100vw - 40px);text-align:center}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .toast.err{background:linear-gradient(135deg,#c0392b,#8b1a1a);border-color:rgba(192,57,43,.4)}
-
 .loader{grid-column:1/-1;text-align:center;padding:70px 20px;color:var(--txt-sub)}
 .spinner{width:44px;height:44px;margin:0 auto 16px;border:2px solid rgba(201,162,39,.15);border-top-color:var(--gold);border-radius:50%;animation:spin .9s linear infinite}
-
 .refresh{position:fixed;top:16px;left:16px;background:linear-gradient(135deg,var(--green-2),var(--green));color:#fff;padding:8px 16px;border-radius:12px;font-size:.72rem;font-weight:800;opacity:0;transition:opacity .5s;z-index:15000;pointer-events:none;border:1px solid rgba(74,222,128,.3);letter-spacing:.3px}
 .refresh.show{opacity:1}
-
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);display:none;place-items:center;z-index:12000;padding:16px}
 .modal.show{display:grid}
 .modal-inner{background:linear-gradient(180deg,var(--black-3),var(--black));border:1px solid var(--bd-2);border-radius:26px;max-width:420px;width:100%;max-height:90vh;overflow:auto;box-shadow:0 40px 100px rgba(0,0,0,.8);position:relative}
@@ -295,12 +267,12 @@ body>*:not(.overlay):not(.cart-panel):not(.modal):not(.toast):not(.refresh){posi
 <div class="refresh" id="refreshBadge">✨ تم تحديث المنيو</div>
 
 <script>
-const GITHUB_OWNER  = "wahhidict";
-const GITHUB_REPO   = "salah";
-const GITHUB_BRANCH = "main";
-const FILE_PATH     = "data.json";
-const POLL_MS       = 30000; // كل 30 ثانية
-const FALLBACK_IMG  = "https://placehold.co/400x400/0d0d0d/c9a227?text=%D8%B5%D9%88%D8%B1%D8%A9";
+/* ============================================================
+   الإعدادات — npoint.io
+   ============================================================ */
+const API_URL = "https://api.npoint.io/377bd68605874d4afbd6";
+const POLL_MS = 120000; // كل دقيقتين
+const FALLBACK_IMG = "https://placehold.co/400x400/0d0d0d/c9a227?text=%D8%B5%D9%88%D8%B1%D8%A9";
 
 let rawData = { items: [] };
 let activeCat = 'الكل';
@@ -310,7 +282,6 @@ let firstLoad = true;
 let lastSig = null;
 let searchTimer = null;
 let currentTheme = 'default';
-let lastSha = null;
 
 const $  = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
@@ -347,47 +318,16 @@ function applyTheme(theme){
   }
 }
 
-/* ============================================================
-   الحل الجذري: نستخدم GitHub API (بدون كاش نهائيًا)
-   ============================================================ */
+/* ============ جلب البيانات من npoint.io ============ */
 async function fetchFreshData(){
   const ts = Date.now();
-  // نجرّب GitHub API أولاً — بدون كاش
-  const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}?ref=${GITHUB_BRANCH}&t=${ts}`;
   try{
-    const r = await fetch(apiUrl, {
-      headers: {
-        'Accept': 'application/vnd.github.v3.raw',
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache'
-      },
-      cache: 'no-store'
-    });
-    if(r.ok){
-      const text = await r.text();
-      try {
-        return JSON.parse(text);
-      } catch(e){
-        // إذا رجع base64 (بعض الأحيان API يرجعها)
-        if(text && text.content){
-          const decoded = atob(text.content.replace(/\n/g,''));
-          return JSON.parse(decodeURIComponent(escape(decoded)));
-        }
-      }
-    }
-  }catch(e){}
-
-  // Fallback: raw مع timestamp فريد
-  try{
-    const r2 = await fetch(`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${FILE_PATH}?nocache=${ts}-${Math.random()}`, {
+    const r = await fetch(`${API_URL}?t=${ts}&r=${Math.random()}`, {
       cache: 'no-store',
-      headers: { 'Cache-Control': 'no-cache' }
+      headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
     });
-    if(r2.ok){
-      return await r2.json();
-    }
-  }catch(e){}
-
+    if(r.ok) return await r.json();
+  }catch(e){ console.warn('fetch error', e); }
   return null;
 }
 
@@ -420,26 +360,6 @@ async function loadData(isManual=false){
 
   firstLoad = false;
   return true;
-}
-
-/* فحص سريع لـ SHA — كل 30 ثانية */
-async function checkUpdate(){
-  if(document.hidden) return;
-  try{
-    const r = await fetch(
-      `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/commits?path=${FILE_PATH}&per_page=1&t=${Date.now()}`,
-      { headers:{'Accept':'application/vnd.github.v3+json','Cache-Control':'no-cache'}, cache:'no-store' }
-    );
-    if(!r.ok) return;
-    const arr = await r.json();
-    if(!arr.length) return;
-    const sha = arr[0].sha;
-    if(lastSha && sha !== lastSha){
-      // تغيّر → نحدّث فورًا
-      await loadData();
-    }
-    lastSha = sha;
-  }catch(e){}
 }
 
 async function forceRefresh(){
@@ -765,18 +685,11 @@ $('#searchInput').addEventListener('input', () => {
   searchTimer = setTimeout(renderItems, 150);
 });
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
   loadCart();
-  await loadData();
-  // أول فحص SHA
-  try{
-    const r = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/commits?path=${FILE_PATH}&per_page=1`,{cache:'no-store'});
-    if(r.ok){ const arr = await r.json(); if(arr.length) lastSha = arr[0].sha; }
-  }catch(e){}
-
-  // فحص كل 30 ثانية
-  setInterval(checkUpdate, POLL_MS);
-  document.addEventListener('visibilitychange', () => { if(!document.hidden) checkUpdate(); });
+  loadData();
+  setInterval(() => loadData(), POLL_MS);
+  document.addEventListener('visibilitychange', () => { if(!document.hidden) loadData(); });
 });
 
 window.addEventListener('popstate', () => {
