@@ -168,16 +168,6 @@
       "image": "https://images.unsplash.com/photo-1546173159-315724a31696?w=600&q=80"
     },
     {
-      "id": 1700000000020,
-      "name": "عصير أناناس",
-      "category": "عصائر طازجة",
-      "description": "أناناس استوائي طازج — حلو ومنعش",
-      "price": "65,000 ل.س",
-      "available": true,
-      "featured": false,
-      "image": "https://images.unsplash.com/photo-1623000853919-894a9b6f4d81?w=600&q=80"
-    },
-    {
       "id": 1700000000021,
       "name": "عصير بطيخ",
       "category": "عصائر موسمية",
