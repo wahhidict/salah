@@ -1,7 +1,7 @@
 {
   "whatsapp_number": "963900000000",
   "phone_number": "011000000",
-  "status_text": "مفتوح الآن • توصيل لجميع مناطق دمشق",
+  "status_text": "مفتوح الآن • خدمة توصيل",
   "ticker_text": "أهلاً بكم في فواكه أبو صلاح • الطعم الحقيقي والمذاق المميز • كفرسوسة - دمشق",
   "delivery_mode": "message",
   "delivery_price": "0",
@@ -408,5 +408,5 @@
       "image": "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=600&q=80"
     }
   ],
-  "theme": "eid"
+  "theme": "default"
 }
