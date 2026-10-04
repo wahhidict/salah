@@ -128,16 +128,6 @@
       "image": "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=600&q=80"
     },
     {
-      "id": 1700000000015,
-      "name": "عصير مانجو ألفونسو",
-      "category": "عصائر طازجة",
-      "description": "مانجو هندي فاخر — كثيف وطبيعي",
-      "price": "55,000 ل.س",
-      "available": true,
-      "featured": true,
-      "image": "https://images.unsplash.com/photo-1623000853919-894a9b6f4d81?w=600&q=80"
-    },
-    {
       "id": 1700000000016,
       "name": "عصير فراولة طازج",
       "category": "عصائر طازجة",
