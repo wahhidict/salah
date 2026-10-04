@@ -74,7 +74,7 @@
       "description": "برتقال طازج 100% — يُعصر أمامك",
       "price": "35,000 ل.س",
       "available": true,
-      "featured": true,
+      "featured": false,
       "image": "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=600&q=80"
     },
     {
