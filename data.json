@@ -198,16 +198,6 @@
       "image": "https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=600&q=80"
     },
     {
-      "id": 1700000000024,
-      "name": "عصير خوخ",
-      "category": "عصائر موسمية",
-      "description": "خوخ بلدي — ناعم وحلو",
-      "price": "40,000 ل.س",
-      "available": true,
-      "featured": false,
-      "image": "https://images.unsplash.com/photo-1629828874511-9e18e6c5a0b3?w=600&q=80"
-    },
-    {
       "id": 1700000000025,
       "name": "عصير مشمش",
       "category": "عصائر موسمية",
