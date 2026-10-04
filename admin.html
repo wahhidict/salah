@@ -110,7 +110,7 @@ select option{background:#04160e;color:#fff}
     <label>رقم الاتصال:</label>
     <input type="text" id="phoneNum" placeholder="011xxxxxxx">
     <label>حالة المحل:</label>
-    <input type="text" id="statusTxt" placeholder="مفتوح الآن • خدمة توصيل">
+    <input type="text" id="statusTxt" placeholder="مفتوح الآن • توصيل لجميع مناطق دمشق">
     <label>نص الشريط المتحرك:</label>
     <input type="text" id="tickerTxt" placeholder="أهلاً بكم في فواكه أبو صلاح">
   </div>
@@ -209,6 +209,13 @@ const $$ = s => document.querySelectorAll(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const escAttr = s => esc(s).replace(/"/g,'&quot;');
 
+/* ===== دوال مساعدة للتوكن ===== */
+function getToken(){ return localStorage.getItem('gh_token') || ''; }
+function authHeaders(extra={}){
+  const t = getToken();
+  return t ? { ...extra, 'Authorization': `token ${t}` } : extra;
+}
+
 let toastT;
 function toast(msg, err=false){
   const t = $('#toast');
@@ -246,20 +253,20 @@ async function downloadQR(){
     toast('اضغط مطوّلاً على الصورة لحفظها');
   }
 }
-function openMenuPage(){
-  window.open(buildMenuUrl(), '_blank');
-}
+function openMenuPage(){ window.open(buildMenuUrl(), '_blank'); }
 
 /* ============ التوكن ============ */
 function checkToken(){
-  const t = localStorage.getItem('gh_token');
+  const t = getToken();
   $('#tokenSection').style.display = t ? 'none' : 'block';
 }
 function saveToken(){
   const v = $('#inputToken').value.trim();
   if(!v) return toast('الصق التوكن أولاً', true);
   localStorage.setItem('gh_token', v);
-  checkToken(); toast('✅ تم حفظ التوكن');
+  checkToken();
+  toast('✅ تم حفظ التوكن — جاري إعادة التحميل...');
+  setTimeout(()=>location.reload(), 800);
 }
 function resetToken(){
   if(confirm('مسح التوكن؟')){ localStorage.removeItem('gh_token'); checkToken(); }
@@ -270,18 +277,24 @@ function tokenExpired(){
   checkToken();
 }
 
-/* ============ جلب البيانات ============ */
+/* ============ جلب البيانات (مع التوكن) ============ */
 async function loadData(){
   const ts = Date.now();
+  const token = getToken();
+
   const sources = [
-    { url:`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}?ref=${GITHUB_BRANCH}&t=${ts}`, headers:{'Accept':'application/vnd.github.v3.raw'} },
-    { url:`https://cdn.jsdelivr.net/gh/${GITHUB_OWNER}/${GITHUB_REPO}@${GITHUB_BRANCH}/${FILE_PATH}?t=${ts}` },
-    { url:`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${FILE_PATH}?t=${ts}` },
-    { url:`./${FILE_PATH}?t=${ts}` }
+    {
+      url: `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}?ref=${GITHUB_BRANCH}&t=${ts}`,
+      headers: authHeaders({ 'Accept': 'application/vnd.github.v3.raw' })
+    },
+    { url: `https://cdn.jsdelivr.net/gh/${GITHUB_OWNER}/${GITHUB_REPO}@${GITHUB_BRANCH}/${FILE_PATH}?t=${ts}` },
+    { url: `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${FILE_PATH}?t=${ts}` },
+    { url: `./${FILE_PATH}?t=${ts}` }
   ];
+
   for(const s of sources){
     try{
-      const r = await fetch(s.url, { headers:s.headers||{}, cache:'no-store' });
+      const r = await fetch(s.url, { headers: s.headers || {}, cache: 'no-store' });
       if(!r.ok) continue;
       const d = await r.json();
       if(!d || !Array.isArray(d.items)) continue;
@@ -329,16 +342,21 @@ $$('#themePills button').forEach(b => {
   };
 });
 
+/* ============ الحفظ في GitHub ============ */
 async function saveToGitHub(msg, retry=0){
   if(isSaving){ toast('⏳ حفظ جارٍ...'); return false; }
-  const token = localStorage.getItem('gh_token');
+  const token = getToken();
   if(!token){ toast('أدخل التوكن أولاً', true); checkToken(); return false; }
 
   isSaving = true;
   try{
     const api = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}`;
-    const headers = { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' };
+    const headers = {
+      'Authorization': `token ${token}`,
+      'Accept': 'application/vnd.github.v3+json'
+    };
 
+    // جلب SHA (مع توكن لتجنب rate limit)
     const g = await fetch(`${api}?ref=${GITHUB_BRANCH}&t=${Date.now()}`, { headers, cache:'no-store' });
     if(g.status === 401){ tokenExpired(); return false; }
     let sha = '';
@@ -374,6 +392,7 @@ async function saveToGitHub(msg, retry=0){
   } finally { isSaving = false; }
 }
 
+/* ============ ضغط الصور ============ */
 function compress(file, maxDim=900, quality=.72){
   return new Promise((resolve, reject)=>{
     const rd = new FileReader();
@@ -541,8 +560,9 @@ async function saveSettings(){
 
   const b = $('#saveSettingsBtn');
   b.disabled = true; b.innerText = '⏳ جاري النشر...';
-  await saveToGitHub('تحديث الإعدادات والتوصيل والثيم');
+  const ok = await saveToGitHub('تحديث الإعدادات والتوصيل والثيم');
   b.disabled = false; b.innerText = '⚡ حفظ كل الإعدادات';
+  if(ok) toast('✅ تم حفظ كل الإعدادات — التحديث سيظهر خلال دقيقة');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
