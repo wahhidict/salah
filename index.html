@@ -23,7 +23,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif;-webkit-tap-highlight-color:transparent}
 html,body{overflow-x:hidden}
-body{background:var(--black);color:var(--txt);min-height:100vh;padding-bottom:140px;-webkit-font-smoothing:antialiased;position:relative}
+body{background:var(--black);color:var(--txt);min-height:100vh;padding-bottom:150px;-webkit-font-smoothing:antialiased;position:relative}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(ellipse 800px 400px at 50% -10%,rgba(201,162,39,.06),transparent 70%),radial-gradient(ellipse 600px 300px at 100% 110%,rgba(26,58,42,.15),transparent 70%)}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l7.5 15 16.5 2.4-12 11.7 2.8 16.5L30 38.1l-14.8 7.5 2.8-16.5-12-11.7 16.5-2.4z' fill='none' stroke='%23c9a227' stroke-width='.5'/%3E%3C/svg%3E");background-size:60px 60px}
 body>*:not(.overlay):not(.cart-panel):not(.modal):not(.toast):not(.refresh){position:relative;z-index:1}
@@ -80,45 +80,64 @@ body>*:not(.overlay):not(.cart-panel):not(.modal):not(.toast):not(.refresh){posi
 .qty-mini button{background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--black);border:none;width:28px;height:28px;border-radius:9px;font-weight:900;font-size:1rem;cursor:pointer;display:grid;place-items:center}
 .qty-mini span{font-weight:900;font-size:.85rem;min-width:18px;text-align:center;color:var(--gold-2)}
 
-.cart-bar{position:fixed;bottom:16px;left:16px;right:16px;max-width:868px;margin:0 auto;background:linear-gradient(135deg,var(--green),#0f2419);border:1px solid rgba(201,162,39,.3);color:#fff;padding:14px 18px;border-radius:20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 16px 50px rgba(0,0,0,.6),0 0 0 1px rgba(201,162,39,.1) inset;z-index:90;cursor:pointer;transform:translateY(160%);transition:transform .4s cubic-bezier(.2,.9,.3,1.2)}
-.cart-bar.show{transform:translateY(0)}
-.cart-bar-left{display:flex;align-items:center;gap:10px;font-weight:800}
-.cart-bar-left .cnt{background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--black);border-radius:10px;padding:3px 12px;font-size:.85rem;font-weight:900}
-.cart-bar-right{display:flex;align-items:center;gap:10px}
-.cart-bar-right .total{font-size:.95rem;font-weight:900;color:var(--gold-2)}
-.cart-bar-right .go{background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--black);padding:9px 16px;border-radius:12px;font-weight:900;font-size:.82rem}
+/* ============ شريط السلة الثابت ============ */
+.cart-bar{position:fixed;bottom:14px;left:14px;right:14px;max-width:868px;margin:0 auto;background:linear-gradient(135deg,var(--green),#0f2419);border:1px solid rgba(201,162,39,.35);color:#fff;padding:14px 18px;border-radius:20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 16px 50px rgba(0,0,0,.7),0 0 0 1px rgba(201,162,39,.15) inset;z-index:95;cursor:pointer;transition:transform .2s,background .3s}
+.cart-bar:active{transform:scale(.98)}
+.cart-bar.empty{background:linear-gradient(135deg,#132b1e,#081810);opacity:.95}
+.cart-bar-left{display:flex;align-items:center;gap:10px;font-weight:800;flex-shrink:0}
+.cart-bar-left .icon{font-size:1.2rem}
+.cart-bar-left .cnt{background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--black);border-radius:10px;padding:3px 12px;font-size:.85rem;font-weight:900;min-width:32px;text-align:center}
+.cart-bar-left .lbl{font-size:.88rem}
+.cart-bar-right{display:flex;align-items:center;gap:10px;margin-inline-start:auto}
+.cart-bar-right .total{font-size:1rem;font-weight:900;color:var(--gold-2);letter-spacing:.3px;white-space:nowrap}
+.cart-bar-right .go{background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--black);padding:10px 18px;border-radius:12px;font-weight:900;font-size:.85rem;white-space:nowrap}
+.cart-bar.empty .cart-bar-right .total{display:none}
+.cart-bar.empty .cart-bar-right .go{background:rgba(255,255,255,.12);color:var(--gold-2);border:1px solid rgba(201,162,39,.3)}
+
+/* نبضة خفيفة عند إضافة صنف */
+@keyframes bump{0%{transform:scale(1)}30%{transform:scale(1.04)}100%{transform:scale(1)}}
+.cart-bar.bump{animation:bump .35s ease}
 
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:.35s;z-index:100}
 .overlay.show{opacity:1;pointer-events:auto}
 .cart-panel{position:fixed;inset:auto 0 0 0;max-height:92vh;z-index:101;background:linear-gradient(180deg,var(--black-2),var(--black));border-top-left-radius:28px;border-top-right-radius:28px;border-top:1px solid var(--bd-2);transform:translateY(100%);transition:transform .4s cubic-bezier(.25,.9,.3,1);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 -30px 80px rgba(0,0,0,.8)}
 .cart-panel.show{transform:translateY(0)}
 @media(min-width:760px){.cart-panel{inset:0 0 0 auto;width:460px;max-height:100vh;border-radius:0;transform:translateX(110%)}.cart-panel.show{transform:translateX(0)}}
-.panel-hdr{padding:18px 22px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd);background:rgba(5,5,5,.6)}
-.panel-hdr h2{font-family:'Amiri',serif;font-size:1.2rem;font-weight:700;color:var(--gold-2);display:flex;align-items:center;gap:8px}
+
+.panel-hdr{padding:16px 22px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd);background:rgba(5,5,5,.85);backdrop-filter:blur(10px);position:sticky;top:0;z-index:5}
+.panel-hdr h2{font-family:'Amiri',serif;font-size:1.15rem;font-weight:700;color:var(--gold-2);display:flex;align-items:center;gap:8px}
 .close-x{background:rgba(192,57,43,.15)!important;border:1px solid rgba(192,57,43,.4)!important;color:#e74c3c!important;width:42px!important;height:42px!important;border-radius:12px;cursor:pointer;font-size:1.2rem!important;font-weight:900!important;display:grid;place-items:center;transition:.2s}
 .close-x:active{transform:scale(.9)}
+
+/* شريط الملخص المثبت أعلى السلة */
+.panel-summary{padding:12px 22px;background:linear-gradient(90deg,rgba(201,162,39,.12),rgba(201,162,39,.04));border-bottom:1px solid rgba(201,162,39,.25);display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.88rem;color:var(--gold-2);position:sticky;top:74px;z-index:4;backdrop-filter:blur(10px)}
+.panel-summary .s-count{display:flex;align-items:center;gap:8px}
+.panel-summary .s-count strong{background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--black);padding:2px 10px;border-radius:8px;font-size:.85rem;font-weight:900}
+.panel-summary .s-total{font-size:1.05rem;color:#fff;font-weight:900;letter-spacing:.3px}
+
 .panel-body{flex:1;overflow-y:auto;padding:16px 20px}
 .panel-body::-webkit-scrollbar{width:4px}
 .panel-body::-webkit-scrollbar-thumb{background:rgba(201,162,39,.3);border-radius:10px}
 
 .cart-item{display:flex;gap:12px;align-items:center;padding:12px;background:var(--glass);border:1px solid var(--bd);border-radius:16px;margin-bottom:10px;transition:.2s}
 .cart-item:hover{border-color:var(--bd-2)}
-.cart-item img{width:56px;height:56px;border-radius:12px;object-fit:cover;background:var(--black-2)}
+.cart-item img{width:56px;height:56px;border-radius:12px;object-fit:cover;background:var(--black-2);flex-shrink:0}
 .cart-item .info{flex:1;min-width:0}
 .cart-item .name{font-weight:800;font-size:.88rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cart-item .p{font-size:.75rem;color:var(--gold-2);font-weight:700;margin-top:3px}
-.cart-item .qty{display:flex;align-items:center;gap:6px}
+.cart-item .p{font-size:.78rem;color:var(--gold-2);font-weight:800;margin-top:3px}
+.cart-item .line-total{font-size:.72rem;color:var(--txt-sub);margin-top:2px;font-weight:600}
+.cart-item .qty{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .cart-item .qty button{width:30px;height:30px;border-radius:9px;border:none;cursor:pointer;background:var(--glass-2);color:var(--txt);font-weight:900;font-size:1rem;display:grid;place-items:center;transition:.15s}
 .cart-item .qty button:hover{background:rgba(201,162,39,.2)}
 .cart-item .qty button.plus{background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:var(--black)}
 .cart-item .qty span{font-weight:900;min-width:22px;text-align:center;font-size:.9rem}
 
-.empty-cart{text-align:center;padding:70px 20px;color:var(--txt-sub)}
+.empty-cart{text-align:center;padding:60px 20px;color:var(--txt-sub)}
 .empty-cart .ico{font-size:3.5rem;opacity:.3;margin-bottom:14px}
 .empty-cart p{font-size:.95rem;font-weight:600}
 .empty-cart .sub{font-size:.78rem;margin-top:8px;opacity:.7}
 
-.form-sec{padding:18px 22px;border-top:1px solid var(--bd);background:rgba(5,5,5,.5)}
+.form-sec{padding:16px 22px;border-top:1px solid var(--bd);background:rgba(5,5,5,.6);overflow-y:auto;max-height:60vh}
 .form-sec h3{font-family:'Amiri',serif;font-size:1rem;font-weight:700;color:var(--gold-2);margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .field{margin-bottom:12px}
 .field label{display:block;font-size:.72rem;color:var(--txt-sub);font-weight:700;margin-bottom:6px;letter-spacing:.3px}
@@ -135,7 +154,7 @@ body>*:not(.overlay):not(.cart-panel):not(.modal):not(.toast):not(.refresh){posi
 .delivery-info.free{background:linear-gradient(135deg,rgba(74,222,128,.1),rgba(74,222,128,.03));border-color:rgba(74,222,128,.3);color:#a9dfbf}
 .delivery-info.fixed{background:linear-gradient(135deg,var(--gold-glow),rgba(201,162,39,.05));border-color:var(--bd-2);color:var(--gold-2)}
 
-.summary{display:flex;justify-content:space-between;align-items:center;padding:10px 0;font-size:.88rem;font-weight:700;color:var(--txt-sub)}
+.summary{display:flex;justify-content:space-between;align-items:center;padding:9px 0;font-size:.86rem;font-weight:700;color:var(--txt-sub)}
 .summary.grand{padding-top:14px;border-top:1px solid var(--bd);margin-top:8px;font-size:1rem;color:var(--txt)}
 .summary .val{color:var(--gold-2);font-size:1rem;font-weight:900}
 .summary.grand .val{font-size:1.2rem}
@@ -200,15 +219,16 @@ body>*:not(.overlay):not(.cart-panel):not(.modal):not(.toast):not(.refresh){posi
   <div class="grid" id="grid"><div class="loader"><div class="spinner"></div>جاري تحميل المنيو...</div></div>
 </main>
 
-<div class="cart-bar" id="cartBar" onclick="openCart()">
+<!-- شريط السلة الثابت -->
+<div class="cart-bar empty" id="cartBar" onclick="openCart()">
   <div class="cart-bar-left">
-    <span>🛒</span>
+    <span class="icon">🛒</span>
     <span class="cnt" id="cartCnt">0</span>
-    <span>صنف</span>
+    <span class="lbl" id="cartLbl">ابدأ الطلب</span>
   </div>
   <div class="cart-bar-right">
     <span class="total" id="cartTotal">0 ل.س</span>
-    <span class="go">عرض السلة</span>
+    <span class="go" id="cartGo">اختر أصنافك</span>
   </div>
 </div>
 
@@ -219,6 +239,13 @@ body>*:not(.overlay):not(.cart-panel):not(.modal):not(.toast):not(.refresh){posi
     <h2>🛒 سلة الطلبات</h2>
     <button class="close-x" onclick="closeCart()" aria-label="إغلاق السلة">✕</button>
   </div>
+
+  <!-- ملخص مثبت أعلى السلة -->
+  <div class="panel-summary">
+    <div class="s-count"><strong id="panelCount">0</strong> صنف مختار</div>
+    <div class="s-total" id="panelTotal">0 ل.س</div>
+  </div>
+
   <div class="panel-body" id="cartItems">
     <div class="empty-cart">
       <div class="ico">🛒</div>
@@ -308,7 +335,6 @@ function toast(msg, err=false){
   t._t = setTimeout(()=>t.classList.remove('show'), 2800);
 }
 
-/* ============ الثيمات ============ */
 function applyTheme(theme){
   theme = theme || 'default';
   if(theme === currentTheme && $('#themeStyle')) return;
@@ -329,7 +355,6 @@ function applyTheme(theme){
   }
 }
 
-/* ============ تحميل البيانات ============ */
 async function loadData(){
   const ts = Date.now();
   const sources = [
@@ -479,6 +504,7 @@ function closeModal(){ $('#itemModal').classList.remove('show'); }
 function qty(id, delta){
   const it = rawData.items.find(i => i.id === id);
   if(!it) return;
+  const before = cartCount();
   if(!cart[id]) cart[id] = { name:it.name, price:it.price, qty:0, image:it.image };
   cart[id].qty += delta;
   if(cart[id].qty <= 0) delete cart[id];
@@ -486,6 +512,12 @@ function qty(id, delta){
   renderItems();
   updateCartUI();
   if($('#cartPanel').classList.contains('show')) renderCartPanel();
+  // نبضة عند إضافة صنف
+  if(delta > 0 && cartCount() > before){
+    const bar = $('#cartBar');
+    bar.classList.add('bump');
+    setTimeout(()=>bar.classList.remove('bump'), 400);
+  }
 }
 
 function cartSubtotal(){
@@ -505,20 +537,39 @@ function cartCount(){
   return n;
 }
 
+/* ============ شريط السلة الثابت ============ */
 function updateCartUI(){
   const n = cartCount();
   const bar = $('#cartBar');
+  $('#cartCnt').innerText = n;
+
   if(n > 0){
-    bar.classList.add('show');
-    $('#cartCnt').innerText = n;
+    bar.classList.remove('empty');
+    $('#cartLbl').innerText = 'صنف مختار';
     $('#cartTotal').innerText = fmt(cartTotal());
-  } else bar.classList.remove('show');
+    $('#cartGo').innerText = 'عرض السلة';
+  } else {
+    bar.classList.add('empty');
+    $('#cartLbl').innerText = 'ابدأ الطلب';
+    $('#cartGo').innerText = 'اختر أصنافك';
+  }
+
+  // تحديث ملخص أعلى السلة
+  const pc = $('#panelCount');
+  const pt = $('#panelTotal');
+  if(pc) pc.innerText = n;
+  if(pt) pt.innerText = fmt(cartTotal());
 }
 
 function saveCart(){ try{ localStorage.setItem('salah_cart', JSON.stringify(cart)); }catch(e){} }
 function loadCart(){ try{ const c = localStorage.getItem('salah_cart'); if(c) cart = JSON.parse(c); }catch(e){} }
 
 function openCart(){
+  // إذا فاضية، لا تفتح — بل أخبر الزبون
+  if(cartCount() === 0){
+    toast('🛒 السلة فارغة — اختر أصنافك أولاً');
+    return;
+  }
   renderCartPanel();
   $('#overlay').classList.add('show');
   $('#cartPanel').classList.add('show');
@@ -543,12 +594,14 @@ function renderCartPanel(){
 
   box.innerHTML = ids.map(id => {
     const it = cart[id];
+    const lineTotal = num(it.price) * it.qty;
     return `
     <div class="cart-item">
       <img src="${esc(it.image||FALLBACK_IMG)}" onerror="this.onerror=null;this.src='${FALLBACK_IMG}'">
       <div class="info">
         <div class="name">${esc(it.name)}</div>
         <div class="p">${esc(it.price)}</div>
+        ${it.qty > 1 ? `<div class="line-total">× ${it.qty} = ${fmt(lineTotal)}</div>` : ''}
       </div>
       <div class="qty">
         <button onclick="qty(${id},-1)">−</button>
@@ -588,6 +641,10 @@ function updateDeliveryUI(){
 function updateTotalsUI(){
   $('#sumSubtotal').innerText = fmt(cartSubtotal());
   $('#sumTotal').innerText = fmt(cartTotal());
+  const pc = $('#panelCount');
+  const pt = $('#panelTotal');
+  if(pc) pc.innerText = cartCount();
+  if(pt) pt.innerText = fmt(cartTotal());
 }
 
 $$('#typeToggle button').forEach(b => {
