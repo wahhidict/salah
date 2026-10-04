@@ -33,11 +33,11 @@
 </head>
 <body>
 
-  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
-    <h1>لوحة إدارة المنيو ⚡</h1>
-    <button class="btn btn-sm btn-danger" style="font-size:0.75rem;" onclick="resetToken()">إعادة ضبط التوكن 🔑</button>
-  </div>
-  <p style="color: #a4c2b2; margin-bottom: 20px; font-size: 0.9rem;">أي إضافة أو تعديل ينعكس مباشرة على صفحة الزبون تلقائياً.</p>
+  <h1>لوحة إدارة المنيو ⚡</h1>
+  <p style="color: #a4c2b2; margin-bottom: 15px; font-size: 0.9rem;">أي إضافة أو تعديل ينعكس مباشرة على صفحة الزبون تلقائياً.</p>
+
+  <!-- شريط حالة ومربع التوكن -->
+  <div id="tokenBanner" style="margin-bottom: 22px;"></div>
 
   <!-- الإعدادات العامة -->
   <div class="card">
@@ -100,24 +100,49 @@
     let appData = { items: [] };
 
     document.addEventListener("DOMContentLoaded", () => {
+      checkTokenUI();
       fetchData();
     });
 
-    function getStoredToken() {
-      let token = localStorage.getItem("gh_token");
-      if (!token) {
-        token = prompt("🔑 يرجى لصق رمز التوكن الخاص بك لمرة واحدة فقط لتفعيل التحديث التلقائي:");
-        if (token && token.trim() !== "") {
-          token = token.trim();
-          localStorage.setItem("gh_token", token);
-        }
+    function checkTokenUI() {
+      const token = localStorage.getItem("gh_token");
+      const banner = document.getElementById("tokenBanner");
+      if (token) {
+        banner.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(39, 174, 96, 0.15); border:1px solid #27ae60; padding:12px 16px; border-radius:14px;">
+            <span style="color:#2ecc71; font-weight:700; font-size:0.9rem;">✅ الربط التلقائي بـ GitHub مفعل وجاهز</span>
+            <button class="btn btn-sm btn-danger" onclick="resetToken()" style="font-size:0.8rem;">تغيير التوكن 🔑</button>
+          </div>
+        `;
+      } else {
+        banner.innerHTML = `
+          <div style="background:rgba(243, 156, 18, 0.15); border:1px solid #f39c12; padding:16px; border-radius:14px;">
+            <label style="color:#ffe082; font-weight:700; margin-bottom:8px; display:block;">🔑 أدخل توكن GitHub لتفعيل التحديث الفوري (مرة واحدة فقط):</label>
+            <div style="display:flex; gap:8px;">
+              <input type="password" id="inputToken" placeholder="الصق رمز github_pat_... هنا" style="margin-bottom:0;">
+              <button class="btn btn-green" onclick="saveInputToken()" style="white-space:nowrap;">حفظ التوكن</button>
+            </div>
+          </div>
+        `;
       }
-      return token;
+    }
+
+    function saveInputToken() {
+      const val = document.getElementById("inputToken").value.trim();
+      if (!val) {
+        alert("يرجى إلصاق رمز التوكن أولاً");
+        return;
+      }
+      localStorage.setItem("gh_token", val);
+      checkTokenUI();
+      showToast("تم حفظ التوكن بنجاح! اللوحة جاهزة للتحديث التلقائي.");
     }
 
     function resetToken() {
-      localStorage.removeItem("gh_token");
-      alert("تم إزالة التوكن من متصفحك. سيُطلب منك إدخاله مجدداً عند إجراء التحديث القادم.");
+      if(confirm("هل تريد إزالة التوكن المسجل وإدخال توكن جديد؟")) {
+        localStorage.removeItem("gh_token");
+        checkTokenUI();
+      }
     }
 
     function fetchData() {
@@ -156,9 +181,9 @@
     }
 
     async function syncToGitHub(commitMsg) {
-      const token = getStoredToken();
+      const token = localStorage.getItem("gh_token");
       if (!token) {
-        alert("لم يتم إدخال التوكن! لا يمكن التحديث بدون التوكن.");
+        alert("⚠️ يرجى أدخال رمز التوكن في المربع البرتقالي بأعلى الصفحة أولاً لتمكين التحديث التلقائي.");
         return false;
       }
 
@@ -202,7 +227,7 @@
           return true;
         } else {
           const errData = await putRes.json();
-          showToast("❌ فشل التحديث: " + (errData.message || "تأكد من صحة التوكن"), true);
+          showToast("❌ فشل التحديث: " + (errData.message || "تأكد من صحة التوكن والصلاحيات"), true);
           return false;
         }
       } catch (err) {
@@ -299,6 +324,7 @@
               <input type="text" id="editName_${index}" value="${item.name}">
               
               <label>التصنيف:</label>
+
               <input type="text" id="editCat_${index}" value="${item.category}">
 
               <label>الوصف:</label>
