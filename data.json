@@ -48,16 +48,6 @@
       "image": "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=600&q=80"
     },
     {
-      "id": 1700000000006,
-      "name": "كوكتيل مانجو وحليب",
-      "category": "كوكتيلات كريمية",
-      "description": "مانجو هندي فاخر، حليب، قشطة — كثيف وغني",
-      "price": "70,000 ل.س",
-      "available": true,
-      "featured": false,
-      "image": "https://images.unsplash.com/photo-1623000853919-894a9b6f4d81?w=600&q=80"
-    },
-    {
       "id": 1700000000007,
       "name": "كوكتيل فراولة وحليب",
       "category": "كوكتيلات كريمية",
