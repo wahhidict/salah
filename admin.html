@@ -93,7 +93,6 @@ select option{background:#04160e;color:#fff}
     <p style="font-size:.72rem;color:var(--sub);margin-top:8px">صلاحية <code>repo</code> فقط.</p>
   </div>
 
-  <!-- الإعدادات العامة -->
   <div class="card">
     <h2>🏪 الإعدادات العامة</h2>
     <label>رقم الواتساب (مع رمز الدولة):</label>
@@ -106,7 +105,6 @@ select option{background:#04160e;color:#fff}
     <input type="text" id="tickerTxt" placeholder="أهلاً بكم في فواكه أبو صلاح">
   </div>
 
-  <!-- إعدادات التوصيل -->
   <div class="card">
     <h2>🛵 إعدادات التوصيل</h2>
     <p style="font-size:.8rem;color:var(--sub);margin-bottom:12px">اختر كيف يتعامل الموقع مع رسوم التوصيل:</p>
@@ -133,7 +131,6 @@ select option{background:#04160e;color:#fff}
     <button class="btn btn-gold btn-full" id="saveSettingsBtn" onclick="saveSettings()" style="margin-top:14px">⚡ حفظ كل الإعدادات</button>
   </div>
 
-  <!-- إضافة صنف -->
   <div class="card">
     <h2>➕ إضافة صنف جديد</h2>
     <label>اسم الصنف *</label>
@@ -154,7 +151,6 @@ select option{background:#04160e;color:#fff}
     <button class="btn btn-green btn-full" id="addBtn" onclick="addItem()">⚡ إضافة ونشر فوراً</button>
   </div>
 
-  <!-- الأصناف -->
   <div class="card">
     <h2>📋 الأصناف الحالية</h2>
     <input type="text" id="filterItems" placeholder="🔍 ابحث في الأصناف..." style="margin-bottom:14px" oninput="renderItems()">
@@ -347,7 +343,7 @@ async function addItem(){
   if(!name || !cat || !price) return toast('أدخل الاسم والتصنيف والسعر', true);
   if(!img) return toast('اختر صورة للصنف', true);
 
-  appData.items.push({ id: Date.now(), name, category: cat, description: desc, price, available: true, image: img });
+  appData.items.push({ id: Date.now(), name, category: cat, description: desc, price, available: true, featured: false, image: img });
 
   const b = $('#addBtn');
   b.disabled = true; b.innerText = '⏳ جاري النشر...';
