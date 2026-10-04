@@ -44,7 +44,7 @@
       "description": "فراولة طازجة، حليب، سكر — منعش وخفيف",
       "price": "60,000 ل.س",
       "available": true,
-      "featured": false,
+      "featured": true,
       "image": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600&q=80"
     },
     {
