@@ -58,16 +58,6 @@
       "image": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600&q=80"
     },
     {
-      "id": 1700000000008,
-      "name": "كوكتيل شوكولا وموز",
-      "category": "كوكتيلات كريمية",
-      "description": "شوكولا، موز، حليب، آيس كريم — مزيج الأطفال المفضل",
-      "price": "68,000 ل.س",
-      "available": true,
-      "featured": false,
-      "image": "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600&q=80"
-    },
-    {
       "id": 1700000000009,
       "name": "كوكتيل لوتس",
       "category": "كوكتيلات كريمية",
