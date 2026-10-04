@@ -218,16 +218,6 @@
       "image": "https://images.unsplash.com/photo-1528821128474-27f963b062bf?w=600&q=80"
     },
     {
-      "id": 1700000000027,
-      "name": "عصير تين",
-      "category": "عصائر موسمية",
-      "description": "تين طازج — حلو وطبيعي",
-      "price": "50,000 ل.س",
-      "available": true,
-      "featured": false,
-      "image": "https://images.unsplash.com/photo-1601379760880-6f2b4f8a5c2e?w=600&q=80"
-    },
-    {
       "id": 1700000000028,
       "name": "عصير إجاص",
       "category": "عصائر موسمية",
