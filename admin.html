@@ -8,24 +8,19 @@
 <style>
 :root{--gold:#f5b041;--gold2:#ffe4a8;--sub:#9fc0af;--bd:rgba(255,255,255,.12);--glass:rgba(255,255,255,.06)}
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif}
-body{background:linear-gradient(160deg,#04160e,#082a1b 60%,#02100a);color:#fff;min-height:100vh;padding-bottom:60px;-webkit-font-smoothing:antialiased;position:relative}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(700px 400px at 100% 0%,rgba(245,176,65,.08),transparent 60%),radial-gradient(600px 350px at 0% 100%,rgba(46,204,113,.08),transparent 60%);pointer-events:none;z-index:0}
-body>*{position:relative;z-index:1}
+body{background:linear-gradient(160deg,#04160e,#082a1b 60%,#02100a);color:#fff;min-height:100vh;padding-bottom:60px}
 .container{max-width:820px;margin:0 auto;padding:20px}
 .topbar{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(3,16,10,.95),rgba(3,16,10,.8));backdrop-filter:blur(14px);border-bottom:1px solid var(--bd);padding:14px 20px}
 .topbar-inner{max-width:820px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.topbar h1{font-size:1.15rem;font-weight:900;background:linear-gradient(135deg,var(--gold2),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.topbar h1{font-size:1.15rem;font-weight:900;background:linear-gradient(135deg,var(--gold2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .topbar a{background:var(--glass);border:1px solid var(--bd);color:var(--sub);text-decoration:none;padding:7px 13px;border-radius:10px;font-size:.78rem;font-weight:800}
-.card{background:var(--glass);border:1px solid var(--bd);border-radius:20px;padding:20px;margin-bottom:18px;backdrop-filter:blur(10px)}
-.card h2{font-size:1rem;color:var(--gold2);font-weight:900;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card{background:var(--glass);border:1px solid var(--bd);border-radius:20px;padding:20px;margin-bottom:18px}
+.card h2{font-size:1rem;color:var(--gold2);font-weight:900;margin-bottom:14px}
 label{display:block;font-size:.76rem;color:var(--sub);font-weight:800;margin-bottom:6px}
-input,textarea,select{width:100%;padding:11px 14px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--bd);color:#fff;font-size:.9rem;outline:none;font-family:inherit;transition:.2s;margin-bottom:12px}
-input:focus,textarea:focus,select:focus{border-color:var(--gold);background:rgba(245,176,65,.06)}
+input,textarea,select{width:100%;padding:11px 14px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--bd);color:#fff;font-size:.9rem;outline:none;font-family:inherit;margin-bottom:12px}
+input:focus,textarea:focus{border-color:var(--gold)}
 textarea{resize:vertical;min-height:60px}
-select{cursor:pointer}
-select option{background:#04160e;color:#fff}
-.btn{padding:10px 18px;border:none;border-radius:12px;cursor:pointer;font-weight:800;font-size:.88rem;font-family:inherit;transition:.15s;display:inline-flex;align-items:center;justify-content:center;gap:6px}
-.btn:active{transform:scale(.97)}
+.btn{padding:10px 18px;border:none;border-radius:12px;cursor:pointer;font-weight:800;font-size:.88rem;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .btn:disabled{opacity:.55;cursor:not-allowed}
 .btn-gold{background:linear-gradient(135deg,var(--gold),#c98a1f);color:#061c11}
 .btn-green{background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff}
@@ -33,35 +28,27 @@ select option{background:#04160e;color:#fff}
 .btn-red{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff}
 .btn-sm{padding:6px 11px;font-size:.78rem;border-radius:9px}
 .btn-full{width:100%}
-.upload{background:rgba(245,176,65,.08);border:2px dashed rgba(245,176,65,.5);padding:16px;text-align:center;border-radius:14px;cursor:pointer;margin-bottom:12px;transition:.2s;font-size:.88rem;font-weight:700;color:var(--gold2)}
-.upload:hover{background:rgba(245,176,65,.14)}
+.upload{background:rgba(245,176,65,.08);border:2px dashed rgba(245,176,65,.5);padding:16px;text-align:center;border-radius:14px;cursor:pointer;margin-bottom:12px;font-size:.88rem;font-weight:700;color:var(--gold2)}
 .item{background:rgba(255,255,255,.04);border:1px solid var(--bd);border-radius:16px;padding:12px;margin-bottom:10px}
 .item-row{display:flex;gap:12px;align-items:center}
-.item-row img{width:60px;height:60px;border-radius:12px;object-fit:cover;background:#0a2417;flex-shrink:0}
+.item-row img{width:60px;height:60px;border-radius:12px;object-fit:cover;flex-shrink:0}
 .item-info{flex:1;min-width:0}
 .item-info .name{font-size:.95rem;font-weight:800;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .item-info .meta{font-size:.78rem;color:var(--gold2);font-weight:700}
-.item-info .cat{color:var(--sub);font-weight:600}
 .item-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;margin-top:8px}
 .edit-form{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--bd)}
 .edit-form.show{display:block}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff;padding:13px 22px;border-radius:14px;font-weight:800;font-size:.88rem;box-shadow:0 10px 30px rgba(0,0,0,.5);z-index:999;opacity:0;transition:.35s;max-width:calc(100vw - 40px);text-align:center}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff;padding:13px 22px;border-radius:14px;font-weight:800;font-size:.88rem;z-index:999;opacity:0;transition:.35s;max-width:calc(100vw - 40px);text-align:center}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .toast.err{background:linear-gradient(135deg,#e74c3c,#c0392b)}
 .size-info{font-size:.75rem;color:var(--sub);text-align:center;margin-top:8px}
-.size-info.warn{color:var(--gold)}
-.size-info.danger{color:#e74c3c;font-weight:900}
 .delivery-section{background:rgba(52,152,219,.06);border:1px solid rgba(52,152,219,.25);border-radius:14px;padding:14px;margin-top:8px}
 .mode-pills{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.mode-pills button{flex:1;min-width:100px;padding:11px;border-radius:12px;border:1px solid var(--bd);background:var(--glass);color:var(--sub);font-weight:800;font-size:.82rem;cursor:pointer;font-family:inherit;transition:.2s}
+.mode-pills button{flex:1;min-width:100px;padding:11px;border-radius:12px;border:1px solid var(--bd);background:var(--glass);color:var(--sub);font-weight:800;font-size:.82rem;cursor:pointer;font-family:inherit}
 .mode-pills button.active{background:linear-gradient(135deg,var(--gold),#c98a1f);color:#061c11;border-color:var(--gold)}
-.theme-pills{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
-.theme-pills button{padding:14px 10px;font-size:.85rem;line-height:1.4;display:flex;flex-direction:column;gap:4px;align-items:center;border-radius:12px;border:1px solid var(--bd);background:var(--glass);color:var(--sub);font-weight:800;cursor:pointer;font-family:inherit;transition:.2s}
-.theme-pills button.active{background:linear-gradient(135deg,var(--gold),#c98a1f);color:#061c11;border-color:var(--gold)}
-.theme-pills button .emoji{font-size:1.6rem}
 .qr-box{background:#fff;padding:20px;border-radius:14px;text-align:center;margin-bottom:12px}
-.qr-box img{max-width:100%;width:260px;height:260px;border-radius:10px;display:block;margin:0 auto}
-.qr-url{font-size:.72rem;color:var(--sub);margin-top:10px;word-break:break-all;text-align:center;background:rgba(0,0,0,.3);padding:8px 10px;border-radius:8px}
+.qr-box img{max-width:100%;width:260px;height:260px;display:block;margin:0 auto}
+.qr-url{font-size:.72rem;color:var(--sub);margin-top:10px;word-break:break-all;text-align:center;background:rgba(0,0,0,.3);padding:8px;border-radius:8px}
 .hide{display:none!important}
 .info-box{background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.35);border-radius:12px;padding:12px 14px;font-size:.78rem;color:#a9dfbf;margin-bottom:16px;line-height:1.6}
 </style>
@@ -78,7 +65,7 @@ select option{background:#04160e;color:#fff}
 <div class="container">
 
   <div class="info-box">
-    ✅ متصل بـ <b>npoint.io</b> — كل تعديل يُحفظ وينشر فوريًا لكل الزبائن بدون انتظار.
+    ✅ متصل بـ <b>Firebase</b> — كل تعديل يُحفظ فورياً. مجاني للأبد.
   </div>
 
   <div class="card">
@@ -94,45 +81,29 @@ select option{background:#04160e;color:#fff}
   </div>
 
   <div class="card">
-    <h2>🎨 الثيم الموسمي</h2>
-    <p style="font-size:.8rem;color:var(--sub);margin-bottom:14px">اختر ثيم يظهر تلقائيًا لكل الزبائن.</p>
-    <div class="theme-pills" id="themePills">
-      <button data-theme="default"><span class="emoji">✨</span>عادي</button>
-      <button data-theme="ramadan"><span class="emoji">🌙</span>رمضان</button>
-      <button data-theme="eid"><span class="emoji">🎉</span>عيد</button>
-      <button data-theme="summer"><span class="emoji">☀️</span>صيف</button>
-      <button data-theme="winter"><span class="emoji">❄️</span>شتاء</button>
-    </div>
-  </div>
-
-  <div class="card">
     <h2>📱 رمز QR للمنيو</h2>
-    <p style="font-size:.8rem;color:var(--sub);margin-bottom:14px">اطبع الرمز وضعه على الطاولات.</p>
-    <div class="qr-box">
-      <img id="qrImg" alt="QR Code" src="">
-    </div>
+    <div class="qr-box"><img id="qrImg" src=""></div>
     <div class="qr-url" id="qrUrl">جاري التوليد...</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-      <button class="btn btn-blue" onclick="downloadQR()" style="flex:1">⬇️ تنزيل الصورة</button>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="btn btn-blue" onclick="downloadQR()" style="flex:1">⬇️ تنزيل</button>
       <button class="btn btn-green" onclick="openMenuPage()" style="flex:1">🔗 فتح الموقع</button>
     </div>
   </div>
 
   <div class="card">
     <h2>🛵 إعدادات التوصيل</h2>
-    <p style="font-size:.8rem;color:var(--sub);margin-bottom:12px">اختر كيف يتعامل الموقع مع رسوم التوصيل:</p>
     <div class="delivery-section">
       <div class="mode-pills" id="modePills">
         <button data-mode="free">🎉 مجاني</button>
         <button data-mode="fixed">💰 سعر ثابت</button>
-        <button data-mode="message">💬 رسالة للمنطقة</button>
+        <button data-mode="message">💬 رسالة</button>
       </div>
       <div id="fixedBlock" class="hide">
-        <label>سعر التوصيل الثابت (بالليرة):</label>
+        <label>سعر التوصيل الثابت:</label>
         <input type="text" id="deliveryPrice" placeholder="مثال: 15000" inputmode="numeric">
       </div>
       <div id="messageBlock" class="hide">
-        <label>نص رسالة التوصيل (تظهر للزبون):</label>
+        <label>نص رسالة التوصيل:</label>
         <textarea id="deliveryMessage" placeholder="قيمة التوصيل تُحدد حسب المنطقة"></textarea>
       </div>
     </div>
@@ -152,16 +123,16 @@ select option{background:#04160e;color:#fff}
     <input type="text" id="nPrice" placeholder="35,000 ل.س">
     <label>صورة الصنف *</label>
     <div class="upload" onclick="document.getElementById('nImg').click()">
-      <span id="uploadText">📸 اضغط لاختيار صورة (تُضغط تلقائياً)</span>
+      <span id="uploadText">📸 اضغط لاختيار صورة</span>
       <input type="file" id="nImg" accept="image/*" style="display:none" onchange="handleNewImage(this)">
     </div>
     <input type="hidden" id="nImgData">
-    <button class="btn btn-green btn-full" id="addBtn" onclick="addItem()">⚡ إضافة ونشر فوراً</button>
+    <button class="btn btn-green btn-full" id="addBtn" onclick="addItem()">⚡ إضافة ونشر</button>
   </div>
 
   <div class="card">
     <h2>📋 الأصناف الحالية</h2>
-    <input type="text" id="filterItems" placeholder="🔍 ابحث في الأصناف..." style="margin-bottom:14px" oninput="renderItems()">
+    <input type="text" id="filterItems" placeholder="🔍 ابحث..." oninput="renderItems()">
     <div id="itemsList">جاري التحميل...</div>
     <div class="size-info" id="sizeInfo"></div>
   </div>
@@ -171,15 +142,12 @@ select option{background:#04160e;color:#fff}
 <div class="toast" id="toast"></div>
 
 <script>
-/* ============================================================
-   الإعدادات — npoint.io
-   ============================================================ */
-const API_URL = "https://api.npoint.io/377bd68605874d4afbd6";
+const FIREBASE_URL = "https://alsalah-695f5-default-rtdb.europe-west1.firebasedatabase.app";
+const API_URL = FIREBASE_URL + "/menu.json";
 
 let appData = { items: [] };
 let isSaving = false;
 let currentMode = 'message';
-let currentTheme = 'default';
 
 const $  = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
@@ -196,7 +164,6 @@ function toast(msg, err=false){
   toastT = setTimeout(()=>t.classList.remove('show'), 3500);
 }
 
-/* ============ QR Code ============ */
 function buildMenuUrl(){
   return window.location.href.split('?')[0].replace(/[^/]*$/,'') + 'index.html';
 }
@@ -213,30 +180,33 @@ async function downloadQR(){
     const a = document.createElement('a');
     a.href = URL.createObjectURL(b);
     a.download = 'menu-qr.png';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+    document.body.appendChild(a); a.click(); a.remove();
     URL.revokeObjectURL(a.href);
-    toast('✅ تم تنزيل QR');
-  }catch(e){
-    window.open(src, '_blank');
-    toast('اضغط مطوّلاً على الصورة لحفظها');
-  }
+    toast('✅ تم التنزيل');
+  }catch(e){ window.open(src, '_blank'); }
 }
 function openMenuPage(){ window.open(buildMenuUrl(), '_blank'); }
 
-/* ============ جلب البيانات ============ */
 async function loadData(){
   try{
     const r = await fetch(`${API_URL}?t=${Date.now()}`, { cache: 'no-store' });
-    if(!r.ok) throw new Error('فشل ' + r.status);
+    if(!r.ok) throw new Error('HTTP ' + r.status);
     const d = await r.json();
-    if(!d || !Array.isArray(d.items)) throw new Error('بيانات غير صحيحة');
+    if(!d){
+      appData = {
+        whatsapp_number: '', phone_number: '', status_text: 'مفتوح الآن',
+        ticker_text: 'أهلاً بكم في فواكه أبو صلاح',
+        delivery_mode: 'message', delivery_price: '0',
+        delivery_message: '🛵 قيمة التوصيل تُحدد حسب المنطقة',
+        items: []
+      };
+      fillForm(); renderItems(); return;
+    }
+    if(!Array.isArray(d.items)) d.items = [];
     appData = d;
-    fillForm();
-    renderItems();
+    fillForm(); renderItems();
   }catch(e){
-    $('#itemsList').innerHTML = '<p style="color:#e74c3c">تعذر جلب البيانات: ' + e.message + '</p>';
+    $('#itemsList').innerHTML = '<p style="color:#e74c3c">تعذر الجلب: ' + e.message + '</p>';
   }
 }
 
@@ -248,7 +218,6 @@ function fillForm(){
   $('#deliveryPrice').value   = appData.delivery_price   || '';
   $('#deliveryMessage').value = appData.delivery_message || '🛵 قيمة التوصيل تُحدد حسب المنطقة';
   setDeliveryMode(appData.delivery_mode || 'message');
-  setTheme(appData.theme || 'default');
 }
 
 function setDeliveryMode(mode){
@@ -257,52 +226,30 @@ function setDeliveryMode(mode){
   $('#fixedBlock').classList.toggle('hide', mode !== 'fixed');
   $('#messageBlock').classList.toggle('hide', mode !== 'message');
 }
-$$('#modePills button').forEach(b => {
-  b.onclick = () => setDeliveryMode(b.dataset.mode);
-});
+$$('#modePills button').forEach(b => b.onclick = () => setDeliveryMode(b.dataset.mode));
 
-function setTheme(theme){
-  currentTheme = theme;
-  $$('#themePills button').forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
-}
-$$('#themePills button').forEach(b => {
-  b.onclick = async () => {
-    if(b.dataset.theme === currentTheme) return;
-    setTheme(b.dataset.theme);
-    appData.theme = b.dataset.theme;
-    const ok = await saveToServer(`تغيير الثيم: ${b.dataset.theme}`);
-    if(ok) toast('✅ تم تطبيق الثيم');
-  };
-});
-
-/* ============ الحفظ في npoint.io ============ */
 async function saveToServer(msg){
-  if(isSaving){ toast('⏳ حفظ جارٍ...'); return false; }
+  if(isSaving){ toast('⏳ حفظ...'); return false; }
   isSaving = true;
   try{
     const r = await fetch(API_URL, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(appData, null, 2)
+      body: JSON.stringify(appData)
     });
     if(!r.ok){
-      let errMsg = 'فشل الحفظ (كود ' + r.status + ')';
-      if(r.status === 401 || r.status === 403){
-        errMsg = '⚠️ npoint.io لا يسمح بالحفظ — فعّل "Allow editing" من إعدادات الـ bin';
-      }
-      throw new Error(errMsg);
+      let err = 'فشل الحفظ (' + r.status + ')';
+      if(r.status === 401 || r.status === 403) err = '⚠️ تحقق من Firebase Rules — يجب أن يكون write: true';
+      throw new Error(err);
     }
     toast('✅ تم النشر بنجاح');
     return true;
   }catch(e){
     toast('❌ ' + e.message, true);
     return false;
-  } finally {
-    isSaving = false;
-  }
+  } finally { isSaving = false; }
 }
 
-/* ============ ضغط الصور ============ */
 function compress(file, maxDim=900, quality=.72){
   return new Promise((resolve, reject)=>{
     const rd = new FileReader();
@@ -331,13 +278,12 @@ function compress(file, maxDim=900, quality=.72){
 async function handleNewImage(input){
   const f = input.files[0];
   if(!f) return;
-  $('#uploadText').innerText = '⏳ جاري ضغط الصورة...';
+  $('#uploadText').innerText = '⏳ جاري الضغط...';
   try{
     const d = await compress(f);
     $('#nImgData').value = d;
-    const kb = Math.round(d.length/1024);
-    $('#uploadText').innerText = `✅ الصورة جاهزة (${kb} KB)`;
-  }catch(e){ $('#uploadText').innerText = '❌ فشل معالجة الصورة'; }
+    $('#uploadText').innerText = '✅ جاهزة (' + Math.round(d.length/1024) + ' KB)';
+  }catch(e){ $('#uploadText').innerText = '❌ فشل'; }
 }
 
 async function addItem(){
@@ -348,20 +294,20 @@ async function addItem(){
   const img   = $('#nImgData').value;
 
   if(!name || !cat || !price) return toast('أدخل الاسم والتصنيف والسعر', true);
-  if(!img) return toast('اختر صورة للصنف', true);
+  if(!img) return toast('اختر صورة', true);
 
   appData.items.push({ id: Date.now(), name, category: cat, description: desc, price, available: true, featured: false, image: img });
 
   const b = $('#addBtn');
-  b.disabled = true; b.innerText = '⏳ جاري النشر...';
-  const ok = await saveToServer(`إضافة صنف: ${name}`);
-  b.disabled = false; b.innerText = '⚡ إضافة ونشر فوراً';
+  b.disabled = true; b.innerText = '⏳ نشر...';
+  const ok = await saveToServer('إضافة: ' + name);
+  b.disabled = false; b.innerText = '⚡ إضافة ونشر';
 
   if(ok){
     renderItems();
     ['nName','nCat','nDesc','nPrice','nImgData'].forEach(id => $('#'+id).value = '');
     $('#nImg').value = '';
-    $('#uploadText').innerText = '📸 اضغط لاختيار صورة (تُضغط تلقائياً)';
+    $('#uploadText').innerText = '📸 اضغط لاختيار صورة';
   }
 }
 
@@ -381,26 +327,21 @@ function renderItems(){
           <img src="${escAttr(it.image)}" onerror="this.src='https://placehold.co/60/0a2b1a/f5b041?text=%D8%B5%D9%88%D8%B1%D8%A9'">
           <div class="item-info">
             <div class="name">${esc(it.name)} ${it.featured?'⭐':''}</div>
-            <div class="meta">${esc(it.price)} <span class="cat">• ${esc(it.category)}</span></div>
+            <div class="meta">${esc(it.price)} • ${esc(it.category)}</div>
           </div>
         </div>
         <div class="item-actions">
           <button class="btn btn-sm btn-blue" onclick="toggleEdit(${i})">تعديل ✏️</button>
           <button class="btn btn-sm ${it.available?'btn-green':''}" style="${it.available?'':'background:rgba(255,255,255,.1);color:#fff'}" onclick="toggleAvail(${i})">${it.available?'متوفر ✓':'نفذ ✗'}</button>
-          <button class="btn btn-sm ${it.featured?'btn-gold':''}" style="${it.featured?'':'background:rgba(255,255,255,.1);color:#fff'}" onclick="toggleFeatured(${i})">${it.featured?'⭐ الأكثر طلباً':'☆ تمييز'}</button>
+          <button class="btn btn-sm ${it.featured?'btn-gold':''}" style="${it.featured?'':'background:rgba(255,255,255,.1);color:#fff'}" onclick="toggleFeatured(${i})">${it.featured?'⭐ مميز':'☆ تمييز'}</button>
           <button class="btn btn-sm btn-red" onclick="delItem(${i})">حذف 🗑️</button>
         </div>
         <div class="edit-form" id="ef_${i}">
-          <label>الاسم:</label>
-          <input type="text" id="eName_${i}" value="${escAttr(it.name)}">
-          <label>التصنيف:</label>
-          <input type="text" id="eCat_${i}" value="${escAttr(it.category)}" list="catsList">
-          <label>الوصف:</label>
-          <input type="text" id="eDesc_${i}" value="${escAttr(it.description||'')}">
-          <label>السعر:</label>
-          <input type="text" id="ePrice_${i}" value="${escAttr(it.price)}">
-          <label>تغيير الصورة (اختياري):</label>
-          <input type="file" accept="image/*" onchange="handleEditImage(this, ${i})">
+          <label>الاسم:</label><input type="text" id="eName_${i}" value="${escAttr(it.name)}">
+          <label>التصنيف:</label><input type="text" id="eCat_${i}" value="${escAttr(it.category)}" list="catsList">
+          <label>الوصف:</label><input type="text" id="eDesc_${i}" value="${escAttr(it.description||'')}">
+          <label>السعر:</label><input type="text" id="ePrice_${i}" value="${escAttr(it.price)}">
+          <label>تغيير الصورة:</label><input type="file" accept="image/*" onchange="handleEditImage(this, ${i})">
           <div style="display:flex;gap:8px;margin-top:10px">
             <button class="btn btn-green btn-sm" onclick="saveEdit(${i})">حفظ ✅</button>
             <button class="btn btn-sm" style="background:rgba(255,255,255,.1);color:#fff" onclick="toggleEdit(${i})">إلغاء</button>
@@ -414,11 +355,7 @@ function renderItems(){
   $('#catsList').innerHTML = cats.map(c=>`<option value="${escAttr(c)}">`).join('');
 
   const kb = Math.round(JSON.stringify(appData).length / 1024);
-  const el = $('#sizeInfo');
-  el.className = 'size-info';
-  el.innerText = `حجم الملف: ${kb} KB — عدد الأصناف: ${appData.items.length}`;
-  if(kb > 900){ el.classList.add('danger'); el.innerText += ' — ⚠️ اقتربت من الحد!'; }
-  else if(kb > 600){ el.classList.add('warn'); el.innerText += ' — كبير نسبياً'; }
+  $('#sizeInfo').innerText = `حجم البيانات: ${kb} KB — عدد الأصناف: ${appData.items.length}`;
 }
 
 function toggleEdit(i){ $('#ef_'+i).classList.toggle('show'); }
@@ -429,32 +366,31 @@ async function handleEditImage(input, i){
   try{
     const d = await compress(f);
     appData.items[i].image = d;
-    toast('✅ الصورة جاهزة، اضغط حفظ');
-  }catch(e){ toast('فشل معالجة الصورة', true); }
+    toast('✅ اضغط حفظ');
+  }catch(e){ toast('فشل', true); }
 }
 async function saveEdit(i){
   appData.items[i].name        = $('#eName_'+i).value.trim();
   appData.items[i].category    = $('#eCat_'+i).value.trim();
   appData.items[i].description = $('#eDesc_'+i).value.trim();
   appData.items[i].price       = $('#ePrice_'+i).value.trim();
-  const ok = await saveToServer(`تعديل: ${appData.items[i].name}`);
+  const ok = await saveToServer('تعديل');
   if(ok) renderItems();
 }
 async function toggleAvail(i){
   appData.items[i].available = !appData.items[i].available;
-  const ok = await saveToServer(`حالة: ${appData.items[i].name}`);
+  const ok = await saveToServer('حالة');
   if(ok) renderItems();
 }
 async function toggleFeatured(i){
   appData.items[i].featured = !appData.items[i].featured;
-  const ok = await saveToServer(`${appData.items[i].featured?'تمييز':'إلغاء تمييز'}: ${appData.items[i].name}`);
+  const ok = await saveToServer('تمييز');
   if(ok) renderItems();
 }
 async function delItem(i){
-  if(!confirm('تأكيد حذف "' + appData.items[i].name + '"؟')) return;
-  const name = appData.items[i].name;
+  if(!confirm('حذف "' + appData.items[i].name + '"؟')) return;
   appData.items.splice(i,1);
-  const ok = await saveToServer(`حذف: ${name}`);
+  const ok = await saveToServer('حذف');
   if(ok) renderItems();
 }
 
@@ -466,13 +402,11 @@ async function saveSettings(){
   appData.delivery_mode   = currentMode;
   appData.delivery_price  = $('#deliveryPrice').value.trim() || '0';
   appData.delivery_message = $('#deliveryMessage').value.trim() || '🛵 قيمة التوصيل تُحدد حسب المنطقة';
-  appData.theme           = currentTheme;
 
   const b = $('#saveSettingsBtn');
-  b.disabled = true; b.innerText = '⏳ جاري النشر...';
-  const ok = await saveToServer('تحديث الإعدادات');
+  b.disabled = true; b.innerText = '⏳ نشر...';
+  await saveToServer('تحديث الإعدادات');
   b.disabled = false; b.innerText = '⚡ حفظ كل الإعدادات';
-  if(ok) toast('✅ تم حفظ كل الإعدادات');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
