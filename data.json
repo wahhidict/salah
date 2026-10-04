@@ -14,7 +14,7 @@
       "description": "فواكه مشكلة، قشطة بلدية، عسل جبلي، مكسرات، سكوب آيس كريم",
       "price": "85,000 ل.س",
       "available": true,
-      "featured": true,
+      "featured": false,
       "image": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600&q=80"
     },
     {
