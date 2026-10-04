@@ -24,7 +24,7 @@
       "description": "تشكيلة فواكه موسمية طازجة مع قشطة وعسل",
       "price": "65,000 ل.س",
       "available": true,
-      "featured": true,
+      "featured": false,
       "image": "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=600&q=80"
     },
     {
