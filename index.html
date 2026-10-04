@@ -291,6 +291,7 @@ let orderType = 'delivery';
 let firstLoad = true;
 let lastSig = null;
 let searchTimer = null;
+let currentTheme = 'default';
 
 const $  = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
@@ -307,6 +308,28 @@ function toast(msg, err=false){
   t._t = setTimeout(()=>t.classList.remove('show'), 2800);
 }
 
+/* ============ الثيمات ============ */
+function applyTheme(theme){
+  theme = theme || 'default';
+  if(theme === currentTheme && $('#themeStyle')) return;
+  currentTheme = theme;
+  const old = $('#themeStyle');
+  if(old) old.remove();
+  const themes = {
+    ramadan: '--gold:#d4af37;--gold-2:#f4e5b1;--gold-3:#8b6914;--gold-glow:rgba(212,175,55,.3);--bd:rgba(74,222,128,.25);--bd-2:rgba(74,222,128,.4)',
+    eid:     '--gold:#ff6b9d;--gold-2:#ffd1dc;--gold-3:#c44569;--gold-glow:rgba(255,107,157,.3)',
+    summer:  '--gold:#00d4ff;--gold-2:#b8ecff;--gold-3:#0099cc;--gold-glow:rgba(0,212,255,.3)',
+    winter:  '--gold:#a0c4ff;--gold-2:#dce9ff;--gold-3:#6b8cbf;--gold-glow:rgba(160,196,255,.3)'
+  };
+  if(themes[theme]){
+    const s = document.createElement('style');
+    s.id = 'themeStyle';
+    s.textContent = ':root{' + themes[theme] + '}';
+    document.head.appendChild(s);
+  }
+}
+
+/* ============ تحميل البيانات ============ */
 async function loadData(){
   const ts = Date.now();
   const sources = [
@@ -323,11 +346,12 @@ async function loadData(){
       const d = await r.json();
       if(!d || !Array.isArray(d.items)) continue;
 
-      const sig = d.items.map(i=>i.id+'|'+i.price+'|'+i.available).join('~') + '#' + (d.status_text||'') + '#' + (d.ticker_text||'') + '#' + (d.delivery_mode||'') + '#' + (d.delivery_price||'');
+      const sig = d.items.map(i=>i.id+'|'+i.price+'|'+i.available).join('~') + '#' + (d.status_text||'') + '#' + (d.ticker_text||'') + '#' + (d.delivery_mode||'') + '#' + (d.delivery_price||'') + '#' + (d.theme||'');
       const changed = sig !== lastSig;
       lastSig = sig;
 
       rawData = d;
+      applyTheme(d.theme);
       renderAll();
       if(!firstLoad && changed) showRefresh();
       firstLoad = false;
