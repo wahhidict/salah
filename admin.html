@@ -1,443 +1,478 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة التحكم | فواكه أبو صلاح</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
-    body { background: #081d13; color: white; padding: 20px; max-width: 800px; margin: 0 auto; padding-bottom: 60px; }
-    h1 { color: #f39c12; margin-bottom: 8px; font-weight: 900; }
-    .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 18px; padding: 20px; margin-bottom: 22px; }
-    label { display: block; font-size: 0.88rem; color: #ffe082; margin-bottom: 6px; font-weight: 700; }
-    input, textarea, select { width: 100%; padding: 11px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; color: white; margin-bottom: 14px; font-size: 0.95rem; }
-    input:focus, textarea:focus, select:focus { border-color: #f39c12; outline: none; }
-    .btn { background: #f39c12; color: #05140d; font-weight: 800; padding: 10px 18px; border: none; border-radius: 12px; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .btn-green { background: #27ae60; color: white; }
-    .btn-blue { background: #2980b9; color: white; }
-    .btn-danger { background: #c62828; color: white; }
-    .btn-sm { padding: 6px 12px; font-size: 0.82rem; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم | فواكه أبو صلاح</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#f5b041;--gold2:#ffe4a8;--sub:#9fc0af;--bd:rgba(255,255,255,.12);--glass:rgba(255,255,255,.06)}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif}
+body{background:linear-gradient(160deg,#04160e,#082a1b 60%,#02100a);color:#fff;min-height:100vh;padding-bottom:60px;-webkit-font-smoothing:antialiased;position:relative}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(700px 400px at 100% 0%,rgba(245,176,65,.08),transparent 60%),radial-gradient(600px 350px at 0% 100%,rgba(46,204,113,.08),transparent 60%);pointer-events:none;z-index:0}
+body>*{position:relative;z-index:1}
 
-    .item-card-admin { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 14px; margin-bottom: 12px; }
-    .item-row { display: flex; gap: 12px; align-items: center; justify-content: space-between; }
-    .preview-img { width: 65px; height: 65px; border-radius: 10px; object-fit: cover; background: #222; }
+.container{max-width:820px;margin:0 auto;padding:20px}
+.topbar{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(3,16,10,.95),rgba(3,16,10,.8));backdrop-filter:blur(14px);border-bottom:1px solid var(--bd);padding:14px 20px}
+.topbar-inner{max-width:820px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.topbar h1{font-size:1.15rem;font-weight:900;background:linear-gradient(135deg,var(--gold2),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.topbar a{background:var(--glass);border:1px solid var(--bd);color:var(--sub);text-decoration:none;padding:7px 13px;border-radius:10px;font-size:.78rem;font-weight:800}
 
-    .upload-box { background: rgba(243, 156, 18, 0.1); border: 2px dashed #f39c12; padding: 15px; text-align: center; border-radius: 12px; cursor: pointer; margin-bottom: 14px; }
-    .edit-form { margin-top: 15px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.2); display: none; }
+.card{background:var(--glass);border:1px solid var(--bd);border-radius:20px;padding:20px;margin-bottom:18px;backdrop-filter:blur(10px)}
+.card h2{font-size:1rem;color:var(--gold2);font-weight:900;margin-bottom:14px;display:flex;align-items:center;gap:8px}
 
-    #statusToast { position: fixed; bottom: 20px; right: 20px; left: 20px; max-width: 400px; margin: 0 auto; background: #27ae60; color: white; padding: 14px 20px; border-radius: 12px; text-align: center; font-weight: 700; box-shadow: 0 10px 25px rgba(0,0,0,0.5); display: none; z-index: 9999; }
-    #statusToast.error { background: #c62828; }
+label{display:block;font-size:.76rem;color:var(--sub);font-weight:800;margin-bottom:6px}
+input,textarea,select{width:100%;padding:11px 14px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--bd);color:#fff;font-size:.9rem;outline:none;font-family:inherit;transition:.2s;margin-bottom:12px}
+input:focus,textarea:focus,select:focus{border-color:var(--gold);background:rgba(245,176,65,.06)}
+textarea{resize:vertical;min-height:60px}
+select{cursor:pointer}
+select option{background:#04160e;color:#fff}
 
-    .data-size { font-size: 0.78rem; color: #a4c2b2; margin-top: 6px; }
-    .data-size.warn { color: #f39c12; }
-    .data-size.danger { color: #e74c3c; font-weight: 800; }
-  </style>
+.btn{padding:10px 18px;border:none;border-radius:12px;cursor:pointer;font-weight:800;font-size:.88rem;font-family:inherit;transition:.15s;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#c98a1f);color:#061c11}
+.btn-green{background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff}
+.btn-blue{background:linear-gradient(135deg,#3498db,#2980b9);color:#fff}
+.btn-red{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff}
+.btn-sm{padding:6px 11px;font-size:.78rem;border-radius:9px}
+.btn-full{width:100%}
+
+.upload{background:rgba(245,176,65,.08);border:2px dashed rgba(245,176,65,.5);padding:16px;text-align:center;border-radius:14px;cursor:pointer;margin-bottom:12px;transition:.2s;font-size:.88rem;font-weight:700;color:var(--gold2)}
+.upload:hover{background:rgba(245,176,65,.14)}
+
+.item{background:rgba(255,255,255,.04);border:1px solid var(--bd);border-radius:16px;padding:12px;margin-bottom:10px}
+.item-row{display:flex;gap:12px;align-items:center}
+.item-row img{width:60px;height:60px;border-radius:12px;object-fit:cover;background:#0a2417;flex-shrink:0}
+.item-info{flex:1;min-width:0}
+.item-info .name{font-size:.95rem;font-weight:800;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item-info .meta{font-size:.78rem;color:var(--gold2);font-weight:700}
+.item-info .cat{color:var(--sub);font-weight:600}
+.item-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;margin-top:8px}
+
+.edit-form{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--bd)}
+.edit-form.show{display:block}
+
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:linear-gradient(135deg,#2ecc71,#27ae60);color:#fff;padding:13px 22px;border-radius:14px;font-weight:800;font-size:.88rem;box-shadow:0 10px 30px rgba(0,0,0,.5);z-index:999;opacity:0;transition:.35s;max-width:calc(100vw - 40px);text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.err{background:linear-gradient(135deg,#e74c3c,#c0392b)}
+
+.token-box{background:rgba(245,176,65,.1);border:1px solid rgba(245,176,65,.4);border-radius:14px;padding:16px;margin-bottom:18px}
+.token-box label{color:var(--gold2)}
+
+.size-info{font-size:.75rem;color:var(--sub);text-align:center;margin-top:8px}
+.size-info.warn{color:var(--gold)}
+.size-info.danger{color:#e74c3c;font-weight:900}
+
+.delivery-section{background:rgba(52,152,219,.06);border:1px solid rgba(52,152,219,.25);border-radius:14px;padding:14px;margin-top:8px}
+.delivery-section .mode-pills{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.delivery-section .mode-pills button{flex:1;min-width:100px;padding:11px;border-radius:12px;border:1px solid var(--bd);background:var(--glass);color:var(--sub);font-weight:800;font-size:.82rem;cursor:pointer;font-family:inherit;transition:.2s}
+.delivery-section .mode-pills button.active{background:linear-gradient(135deg,var(--gold),#c98a1f);color:#061c11;border-color:var(--gold)}
+.hide{display:none!important}
+.footer{text-align:center;margin-top:26px}
+.footer button{background:none;border:none;color:var(--sub);text-decoration:underline;font-size:.75rem;cursor:pointer;font-family:inherit}
+</style>
 </head>
 <body>
 
-  <h1>لوحة إدارة المنيو ⚡</h1>
-  <p style="color: #a4c2b2; margin-bottom: 18px; font-size: 0.9rem;">تعديل فوري يظهر مباشرةً لكل زبون بمجرد الحفظ.</p>
+<div class="topbar">
+  <div class="topbar-inner">
+    <h1>⚡ لوحة إدارة المنيو</h1>
+    <a href="index.html" target="_blank">عرض الموقع ↗</a>
+  </div>
+</div>
 
-  <div id="tokenSection" style="display:none; margin-bottom: 22px;">
-    <div style="background:rgba(243, 156, 18, 0.15); border:1px solid #f39c12; padding:16px; border-radius:14px;">
-      <label style="color:#ffe082; font-weight:700; margin-bottom:8px; display:block;">🔑 أدخل توكن GitHub (مرة واحدة فقط):</label>
-      <div style="display:flex; gap:8px;">
-        <input type="password" id="inputToken" placeholder="ghp_..." style="margin-bottom:0;">
-        <button class="btn btn-green" onclick="saveInputToken()" style="white-space:nowrap;">حفظ</button>
-      </div>
-      <div style="font-size:0.75rem; color:#a4c2b2; margin-top:8px;">يحتاج صلاحية <code>repo</code> فقط.</div>
+<div class="container">
+
+  <div id="tokenSection" class="token-box" style="display:none">
+    <label>🔑 توكن GitHub (يُدخل مرة واحدة فقط):</label>
+    <div style="display:flex;gap:8px">
+      <input type="password" id="inputToken" placeholder="ghp_..." style="margin-bottom:0">
+      <button class="btn btn-green" onclick="saveToken()">حفظ</button>
     </div>
+    <p style="font-size:.72rem;color:var(--sub);margin-top:8px">صلاحية <code>repo</code> فقط.</p>
   </div>
 
+  <!-- الإعدادات العامة -->
   <div class="card">
-    <h3 style="color:#ffe082; margin-bottom:12px;">1️⃣ الإعدادات العامة للمحل</h3>
+    <h2>🏪 الإعدادات العامة</h2>
     <label>رقم الواتساب (مع رمز الدولة):</label>
-    <input type="text" id="waNum">
-    <label>رقم الاتصال المباشر:</label>
-    <input type="text" id="phoneNum">
+    <input type="text" id="waNum" placeholder="963xxxxxxxxx">
+    <label>رقم الاتصال:</label>
+    <input type="text" id="phoneNum" placeholder="011xxxxxxx">
     <label>حالة المحل:</label>
-    <input type="text" id="statusTxt">
+    <input type="text" id="statusTxt" placeholder="مفتوح الآن • خدمة توصيل">
     <label>نص الشريط المتحرك:</label>
-    <input type="text" id="tickerTxt">
-    <button class="btn btn-green" id="btnSaveSettings" style="width: 100%; padding: 12px;" onclick="saveGeneralSettings()">⚡ حفظ الإعدادات ونشرها فوراً</button>
+    <input type="text" id="tickerTxt" placeholder="أهلاً بكم في فواكه أبو صلاح">
   </div>
 
+  <!-- إعدادات التوصيل -->
   <div class="card">
-    <h3 style="color:#ffe082; margin-bottom:12px;">2️⃣ إضافة صنف جديد</h3>
-    <label>اسم الصنف:</label>
-    <input type="text" id="newItemName" placeholder="مثال: كوكتيل امبراطور">
-    <label>التصنيف:</label>
-    <input type="text" id="newItemCat" placeholder="مثال: كوكتيلات أبو صلاح">
-    <label>الوصف والمكونات:</label>
-    <input type="text" id="newItemDesc" placeholder="مثال: فواكه، قشطة، عسل ومكسرات">
-    <label>السعر:</label>
-    <input type="text" id="newItemPrice" placeholder="مثال: 35,000 ل.س">
-    <label>صورة الصنف 📸:</label>
-    <div class="upload-box" onclick="document.getElementById('newItemImgFile').click()">
-      <span id="fileStatusText">اضغط هنا لاختيار صورة</span>
-      <input type="file" id="newItemImgFile" accept="image/*" style="display:none;" onchange="handleImageUpload(this)">
+    <h2>🛵 إعدادات التوصيل</h2>
+    <p style="font-size:.8rem;color:var(--sub);margin-bottom:12px">اختر كيف يتعامل الموقع مع رسوم التوصيل:</p>
+
+    <div class="delivery-section">
+      <div class="mode-pills" id="modePills">
+        <button data-mode="free">🎉 مجاني</button>
+        <button data-mode="fixed">💰 سعر ثابت</button>
+        <button data-mode="message">💬 رسالة للمنطقة</button>
+      </div>
+
+      <div id="fixedBlock" class="hide">
+        <label>سعر التوصيل الثابت (بالليرة):</label>
+        <input type="text" id="deliveryPrice" placeholder="مثال: 15000" inputmode="numeric">
+        <p style="font-size:.72rem;color:var(--sub);margin-top:-6px">يُضاف تلقائياً إلى إجمالي كل طلب توصيل.</p>
+      </div>
+
+      <div id="messageBlock" class="hide">
+        <label>نص رسالة التوصيل (تظهر للزبون):</label>
+        <textarea id="deliveryMessage" placeholder="مثال: قيمة التوصيل تُحدد حسب المنطقة — سنخبرك عبر واتساب"></textarea>
+      </div>
     </div>
-    <input type="hidden" id="newItemImgBase64">
-    <button class="btn btn-green" id="btnAddItem" style="width: 100%; padding: 14px; font-size: 1rem;" onclick="addNewItem()">⚡ إضافة الصنف ونشره فوراً</button>
+
+    <button class="btn btn-gold btn-full" id="saveSettingsBtn" onclick="saveSettings()" style="margin-top:14px">⚡ حفظ كل الإعدادات</button>
   </div>
 
+  <!-- إضافة صنف -->
   <div class="card">
-    <h3 style="color:#ffe082; margin-bottom:15px;">3️⃣ الأصناف الموجودة</h3>
-    <div id="itemsContainer">جاري التحميل...</div>
-    <div id="dataSizeLabel" class="data-size"></div>
+    <h2>➕ إضافة صنف جديد</h2>
+    <label>اسم الصنف *</label>
+    <input type="text" id="nName" placeholder="مثال: كوكتيل امبراطور">
+    <label>التصنيف *</label>
+    <input type="text" id="nCat" placeholder="مثال: كوكتيلات" list="catsList">
+    <datalist id="catsList"></datalist>
+    <label>الوصف:</label>
+    <input type="text" id="nDesc" placeholder="فواكه، قشطة، عسل، مكسرات">
+    <label>السعر *</label>
+    <input type="text" id="nPrice" placeholder="35,000 ل.س">
+    <label>صورة الصنف *</label>
+    <div class="upload" id="uploadBox" onclick="document.getElementById('nImg').click()">
+      <span id="uploadText">📸 اضغط لاختيار صورة (تُضغط تلقائياً)</span>
+      <input type="file" id="nImg" accept="image/*" style="display:none" onchange="handleNewImage(this)">
+    </div>
+    <input type="hidden" id="nImgData">
+    <button class="btn btn-green btn-full" id="addBtn" onclick="addItem()">⚡ إضافة ونشر فوراً</button>
   </div>
 
-  <div style="text-align: center; margin-top: 30px;">
-    <button onclick="resetToken()" style="background:none; border:none; color:#a4c2b2; text-decoration:underline; font-size:0.75rem; cursor:pointer;">إعادة ضبط التوكن 🔑</button>
+  <!-- الأصناف -->
+  <div class="card">
+    <h2>📋 الأصناف الحالية</h2>
+    <input type="text" id="filterItems" placeholder="🔍 ابحث في الأصناف..." style="margin-bottom:14px" oninput="renderItems()">
+    <div id="itemsList">جاري التحميل...</div>
+    <div class="size-info" id="sizeInfo"></div>
   </div>
 
-  <div id="statusToast"></div>
+  <div class="footer"><button onclick="resetToken()">إعادة ضبط التوكن 🔑</button></div>
+</div>
 
-  <script>
-    /* ============ الإعدادات ============ */
-    const GITHUB_OWNER  = "wahhidict";
-    const GITHUB_REPO   = "salah";
-    const GITHUB_BRANCH = "main";  // ← غيّرها إلى "master" إذا لزم
-    const FILE_PATH     = "data.json";
+<div class="toast" id="toast"></div>
 
-    let appData = { items: [] };
-    let isSaving = false;
+<script>
+const GITHUB_OWNER  = "wahhidict";
+const GITHUB_REPO   = "salah";
+const GITHUB_BRANCH = "main";
+const FILE_PATH     = "data.json";
 
-    document.addEventListener("DOMContentLoaded", () => {
-      checkTokenUI();
-      fetchData();
+let appData = { items: [] };
+let isSaving = false;
+let currentMode = 'message';
+
+const $  = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const escAttr = s => esc(s).replace(/"/g,'&quot;');
+
+let toastT;
+function toast(msg, err=false){
+  const t = $('#toast');
+  t.innerText = msg;
+  t.className = 'toast' + (err ? ' err' : '');
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(()=>t.classList.remove('show'), 3500);
+}
+
+function checkToken(){
+  const t = localStorage.getItem('gh_token');
+  $('#tokenSection').style.display = t ? 'none' : 'block';
+}
+function saveToken(){
+  const v = $('#inputToken').value.trim();
+  if(!v) return toast('الصق التوكن أولاً', true);
+  localStorage.setItem('gh_token', v);
+  checkToken(); toast('✅ تم حفظ التوكن');
+}
+function resetToken(){
+  if(confirm('مسح التوكن؟')){ localStorage.removeItem('gh_token'); checkToken(); }
+}
+function tokenExpired(){
+  toast('⚠️ التوكن منتهي، أعد إدخاله', true);
+  localStorage.removeItem('gh_token');
+  checkToken();
+}
+
+async function loadData(){
+  const ts = Date.now();
+  const sources = [
+    { url:`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}?ref=${GITHUB_BRANCH}&t=${ts}`, headers:{'Accept':'application/vnd.github.v3.raw'} },
+    { url:`https://cdn.jsdelivr.net/gh/${GITHUB_OWNER}/${GITHUB_REPO}@${GITHUB_BRANCH}/${FILE_PATH}?t=${ts}` },
+    { url:`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${FILE_PATH}?t=${ts}` },
+    { url:`./${FILE_PATH}?t=${ts}` }
+  ];
+  for(const s of sources){
+    try{
+      const r = await fetch(s.url, { headers:s.headers||{}, cache:'no-store' });
+      if(!r.ok) continue;
+      const d = await r.json();
+      if(!d || !Array.isArray(d.items)) continue;
+      appData = d;
+      fillForm();
+      renderItems();
+      return;
+    }catch(e){}
+  }
+  $('#itemsList').innerHTML = '<p style="color:#e74c3c">تعذر جلب البيانات.</p>';
+}
+
+function fillForm(){
+  $('#waNum').value     = appData.whatsapp_number || '';
+  $('#phoneNum').value  = appData.phone_number    || '';
+  $('#statusTxt').value = appData.status_text     || '';
+  $('#tickerTxt').value = appData.ticker_text     || '';
+  $('#deliveryPrice').value   = appData.delivery_price   || '';
+  $('#deliveryMessage').value = appData.delivery_message || '🛵 قيمة التوصيل تُحدد حسب المنطقة — سنخبرك بالتفاصيل عبر واتساب';
+  setDeliveryMode(appData.delivery_mode || 'message');
+}
+
+function setDeliveryMode(mode){
+  currentMode = mode;
+  $$('#modePills button').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  $('#fixedBlock').classList.toggle('hide', mode !== 'fixed');
+  $('#messageBlock').classList.toggle('hide', mode !== 'message');
+}
+$$('#modePills button').forEach(b => {
+  b.onclick = () => setDeliveryMode(b.dataset.mode);
+});
+
+async function saveToGitHub(msg, retry=0){
+  if(isSaving){ toast('⏳ حفظ جارٍ...'); return false; }
+  const token = localStorage.getItem('gh_token');
+  if(!token){ toast('أدخل التوكن أولاً', true); checkToken(); return false; }
+
+  isSaving = true;
+  try{
+    const api = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}`;
+    const headers = { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' };
+
+    const g = await fetch(`${api}?ref=${GITHUB_BRANCH}&t=${Date.now()}`, { headers, cache:'no-store' });
+    if(g.status === 401){ tokenExpired(); return false; }
+    let sha = '';
+    if(g.ok){ sha = (await g.json()).sha; }
+    else if(g.status !== 404) throw new Error('فشل جلب SHA ('+g.status+')');
+
+    const json = JSON.stringify(appData, null, 2);
+    const b64 = btoa(unescape(encodeURIComponent(json)));
+
+    const body = { message: msg || 'تحديث', content: b64, branch: GITHUB_BRANCH };
+    if(sha) body.sha = sha;
+
+    const p = await fetch(api, {
+      method:'PUT',
+      headers: { ...headers, 'Content-Type':'application/json' },
+      body: JSON.stringify(body)
     });
 
-    /* ============ التوكن ============ */
-    function checkTokenUI() {
-      const t = localStorage.getItem("gh_token");
-      document.getElementById("tokenSection").style.display = t ? "none" : "block";
+    if(p.status === 401){ tokenExpired(); return false; }
+    if(p.status === 409 && retry < 2){
+      await new Promise(r=>setTimeout(r,600));
+      isSaving = false;
+      return saveToGitHub(msg, retry+1);
     }
-    function saveInputToken() {
-      const v = document.getElementById("inputToken").value.trim();
-      if (!v) return alert("الصق التوكن أولاً");
-      localStorage.setItem("gh_token", v);
-      checkTokenUI();
-      showToast("✅ تم حفظ التوكن");
+    if(!p.ok){
+      const e = await p.json().catch(()=>({}));
+      throw new Error(e.message || ('فشل الرفع ('+p.status+')'));
     }
-    function resetToken() {
-      if (confirm("مسح التوكن وإدخال جديد؟")) {
-        localStorage.removeItem("gh_token");
-        checkTokenUI();
-      }
-    }
-    function handleTokenExpired() {
-      showToast("⚠️ التوكن منتهي أو غير صالح، أعد إدخاله", true);
-      localStorage.removeItem("gh_token");
-      checkTokenUI();
-    }
+    toast('✅ تم النشر بنجاح');
+    return true;
+  }catch(e){
+    toast('❌ '+e.message, true);
+    return false;
+  } finally { isSaving = false; }
+}
 
-    /* ============ جلب البيانات ============ */
-    async function fetchData() {
-      const ts = Date.now();
-      const sources = [
-        {
-          url: `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}?ref=${GITHUB_BRANCH}&t=${ts}`,
-          headers: { 'Accept': 'application/vnd.github.v3.raw' }
-        },
-        { url: `https://cdn.jsdelivr.net/gh/${GITHUB_OWNER}/${GITHUB_REPO}@${GITHUB_BRANCH}/${FILE_PATH}?t=${ts}` },
-        { url: `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${FILE_PATH}?t=${ts}` },
-        { url: `./${FILE_PATH}?t=${ts}` }
-      ];
-
-      for (const src of sources) {
-        try {
-          const res = await fetch(src.url, { headers: src.headers || {}, cache: 'no-store' });
-          if (!res.ok) continue;
-          const data = await res.json();
-          if (!data || !Array.isArray(data.items)) continue;
-          appData = data;
-          loadAdminData();
-          return;
-        } catch (e) { /* next */ }
-      }
-      document.getElementById('itemsContainer').innerHTML =
-        '<p style="color:#e74c3c;">تعذر جلب data.json من أي مصدر.</p>';
-    }
-
-    function loadAdminData() {
-      document.getElementById('waNum').value     = appData.whatsapp_number || "";
-      document.getElementById('phoneNum').value  = appData.phone_number    || "";
-      document.getElementById('statusTxt').value = appData.status_text     || "";
-      document.getElementById('tickerTxt').value = appData.ticker_text     || "";
-      renderItemsList();
-    }
-
-    /* ============ Toast ============ */
-    let toastTimer = null;
-    function showToast(msg, isError = false) {
-      const t = document.getElementById("statusToast");
-      t.innerText = msg;
-      t.className = isError ? "error" : "";
-      t.style.display = "block";
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => { t.style.display = "none"; }, 4000);
-    }
-
-    /* ============ المزامنة مع GitHub ============ */
-    async function syncToGitHub(commitMsg, retry = 0) {
-      if (isSaving) { showToast("⏳ عملية حفظ جارية..."); return false; }
-      const token = localStorage.getItem("gh_token");
-      if (!token) { alert("أدخل التوكن أولاً"); checkTokenUI(); return false; }
-
-      isSaving = true;
-      showToast("⏳ جاري النشر...");
-
-      try {
-        const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${FILE_PATH}`;
-        const headers = {
-          'Authorization': `token ${token}`,
-          'Accept': 'application/vnd.github.v3+json'
-        };
-
-        // 1. جلب SHA الحالي
-        const getRes = await fetch(`${apiUrl}?ref=${GITHUB_BRANCH}&t=${Date.now()}`, { headers, cache: 'no-store' });
-        if (getRes.status === 401) { handleTokenExpired(); return false; }
-
-        let sha = "";
-        if (getRes.ok) {
-          const info = await getRes.json();
-          sha = info.sha;
-        } else if (getRes.status !== 404) {
-          throw new Error('فشل جلب SHA (كود ' + getRes.status + ')');
+function compress(file, maxDim=900, quality=.72){
+  return new Promise((resolve, reject)=>{
+    const rd = new FileReader();
+    rd.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        let { width:w, height:h } = img;
+        if(w > maxDim || h > maxDim){
+          const r = Math.min(maxDim/w, maxDim/h);
+          w = Math.round(w*r); h = Math.round(h*r);
         }
+        const c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        c.getContext('2d').drawImage(img,0,0,w,h);
+        try { resolve(c.toDataURL('image/webp', quality)); }
+        catch(_) { resolve(c.toDataURL('image/jpeg', quality)); }
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    rd.onerror = reject;
+    rd.readAsDataURL(file);
+  });
+}
 
-        // 2. بناء المحتوى
-        const jsonString = JSON.stringify(appData, null, 2);
-        const base64Content = btoa(unescape(encodeURIComponent(jsonString)));
+async function handleNewImage(input){
+  const f = input.files[0];
+  if(!f) return;
+  $('#uploadText').innerText = '⏳ جاري ضغط الصورة...';
+  try{
+    const d = await compress(f);
+    $('#nImgData').value = d;
+    const kb = Math.round(d.length/1024);
+    $('#uploadText').innerText = `✅ الصورة جاهزة (${kb} KB)`;
+  }catch(e){ $('#uploadText').innerText = '❌ فشل معالجة الصورة'; }
+}
 
-        const body = {
-          message: commitMsg || "تحديث المنيو",
-          content: base64Content,
-          branch: GITHUB_BRANCH
-        };
-        if (sha) body.sha = sha;
+async function addItem(){
+  const name  = $('#nName').value.trim();
+  const cat   = $('#nCat').value.trim();
+  const desc  = $('#nDesc').value.trim();
+  const price = $('#nPrice').value.trim();
+  const img   = $('#nImgData').value;
 
-        // 3. رفع
-        const putRes = await fetch(apiUrl, {
-          method: 'PUT',
-          headers: { ...headers, 'Content-Type': 'application/json' },
-          body: JSON.stringify(body)
-        });
+  if(!name || !cat || !price) return toast('أدخل الاسم والتصنيف والسعر', true);
+  if(!img) return toast('اختر صورة للصنف', true);
 
-        if (putRes.status === 401) { handleTokenExpired(); return false; }
+  appData.items.push({ id: Date.now(), name, category: cat, description: desc, price, available: true, image: img });
 
-        if (putRes.status === 409 && retry < 2) {
-          // تعارض SHA — أعد المحاولة بعد جلب SHA جديد
-          await new Promise(r => setTimeout(r, 500));
-          isSaving = false;
-          return await syncToGitHub(commitMsg, retry + 1);
-        }
+  const b = $('#addBtn');
+  b.disabled = true; b.innerText = '⏳ جاري النشر...';
+  const ok = await saveToGitHub(`إضافة صنف: ${name}`);
+  b.disabled = false; b.innerText = '⚡ إضافة ونشر فوراً';
 
-        if (!putRes.ok) {
-          const err = await putRes.json().catch(() => ({}));
-          throw new Error(err.message || ('فشل الرفع (كود ' + putRes.status + ')'));
-        }
+  if(ok){
+    renderItems();
+    ['nName','nCat','nDesc','nPrice','nImgData'].forEach(id => $('#'+id).value = '');
+    $('#nImg').value = '';
+    $('#uploadText').innerText = '📸 اضغط لاختيار صورة (تُضغط تلقائياً)';
+  }
+}
 
-        showToast("✅ تم النشر! الزبائن سيشاهدون التحديث خلال ثوانٍ");
-        return true;
+function renderItems(){
+  const q = ($('#filterItems').value || '').trim().toLowerCase();
+  const list = appData.items.map((it,i)=>({it,i})).filter(({it})=>{
+    if(!q) return true;
+    return (it.name||'').toLowerCase().includes(q) || (it.category||'').toLowerCase().includes(q);
+  });
 
-      } catch (e) {
-        showToast("❌ " + e.message, true);
-        return false;
-      } finally {
-        isSaving = false;
-      }
-    }
-
-    /* ============ ضغط الصور ============ */
-    function compressImage(file, maxDim = 900, quality = 0.72) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          const img = new Image();
-          img.onload = () => {
-            let { width, height } = img;
-            if (width > maxDim || height > maxDim) {
-              const r = Math.min(maxDim / width, maxDim / height);
-              width  = Math.round(width  * r);
-              height = Math.round(height * r);
-            }
-            const canvas = document.createElement('canvas');
-            canvas.width = width; canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-            try {
-              resolve(canvas.toDataURL('image/webp', quality));
-            } catch (e) {
-              resolve(canvas.toDataURL('image/jpeg', quality));
-            }
-          };
-          img.onerror = reject;
-          img.src = ev.target.result;
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-
-    /* ============ إضافة صنف ============ */
-    async function handleImageUpload(input) {
-      const file = input.files[0];
-      if (!file) return;
-      const st = document.getElementById('fileStatusText');
-      st.innerText = "⏳ جاري ضغط الصورة...";
-      try {
-        const dataUrl = await compressImage(file);
-        document.getElementById('newItemImgBase64').value = dataUrl;
-        const kb = Math.round(dataUrl.length / 1024);
-        st.innerText = `✅ تم تجهيز الصورة (${kb} KB)`;
-      } catch (e) {
-        st.innerText = "❌ فشل معالجة الصورة";
-      }
-    }
-
-    async function addNewItem() {
-      const name  = document.getElementById('newItemName').value.trim();
-      const cat   = document.getElementById('newItemCat').value.trim();
-      const desc  = document.getElementById('newItemDesc').value.trim();
-      const price = document.getElementById('newItemPrice').value.trim();
-      const img   = document.getElementById('newItemImgBase64').value;
-
-      if (!name || !cat || !price) return alert("يرجى إدخال الاسم والتصنيف والسعر");
-      if (!img) return alert("يرجى اختيار صورة للصنف");
-
-      if (!appData.items) appData.items = [];
-      appData.items.push({
-        id: Date.now(),
-        name, category: cat, description: desc, price,
-        available: true, image: img
-      });
-
-      const btn = document.getElementById('btnAddItem');
-      btn.disabled = true; btn.innerText = "⏳ جاري النشر...";
-      const ok = await syncToGitHub(`إضافة صنف: ${name}`);
-      btn.disabled = false; btn.innerText = "⚡ إضافة الصنف ونشره فوراً";
-
-      if (ok) {
-        renderItemsList();
-        ['newItemName','newItemCat','newItemDesc','newItemPrice','newItemImgBase64']
-          .forEach(id => document.getElementById(id).value = '');
-        document.getElementById('fileStatusText').innerText = "اضغط هنا لاختيار صورة";
-      }
-    }
-
-    /* ============ عرض الأصناف ============ */
-    function renderItemsList() {
-      const container = document.getElementById('itemsContainer');
-      const items = appData.items || [];
-
-      if (!items.length) {
-        container.innerHTML = '<p style="color:#a4c2b2;">لا توجد أصناف حالياً.</p>';
-      } else {
-        container.innerHTML = items.map((item, i) => `
-          <div class="item-card-admin">
-            <div class="item-row">
-              <img src="${item.image}" class="preview-img" onerror="this.src='https://placehold.co/65x65/222/fff?text=?'">
-              <div style="flex:1; min-width:0;">
-                <strong style="font-size:1rem;">${escapeHtml(item.name)}</strong>
-                <div style="font-size:0.8rem; color:#ffe082;">${escapeHtml(item.price)} • ${escapeHtml(item.category)}</div>
-              </div>
-              <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;">
-                <button class="btn btn-sm btn-blue" onclick="toggleEditForm(${i})">تعديل ✏️</button>
-                <button class="btn btn-sm ${item.available ? 'btn-green' : ''}" onclick="toggleAvail(${i})">${item.available ? 'متوفر' : 'غير متوفر'}</button>
-                <button class="btn btn-sm btn-danger" onclick="deleteItem(${i})">حذف 🗑️</button>
-              </div>
-            </div>
-            <div class="edit-form" id="editForm_${i}">
-              <label>اسم الصنف:</label>
-              <input type="text" id="editName_${i}" value="${escapeAttr(item.name)}">
-              <label>التصنيف:</label>
-              <input type="text" id="editCat_${i}" value="${escapeAttr(item.category)}">
-              <label>الوصف:</label>
-              <input type="text" id="editDesc_${i}" value="${escapeAttr(item.description || '')}">
-              <label>السعر:</label>
-              <input type="text" id="editPrice_${i}" value="${escapeAttr(item.price)}">
-              <label>تغيير الصورة (اختياري):</label>
-              <input type="file" accept="image/*" onchange="handleEditImageUpload(this, ${i})">
-              <div style="display:flex; gap:10px; margin-top:10px;">
-                <button class="btn btn-green btn-sm" onclick="saveItemEdit(${i})">حفظ ونشر ✅</button>
-                <button class="btn btn-danger btn-sm" onclick="toggleEditForm(${i})">إلغاء</button>
-              </div>
-            </div>
+  if(!list.length){
+    $('#itemsList').innerHTML = '<p style="color:var(--sub);text-align:center;padding:20px">لا توجد أصناف</p>';
+  } else {
+    $('#itemsList').innerHTML = list.map(({it,i})=>`
+      <div class="item">
+        <div class="item-row">
+          <img src="${escAttr(it.image)}" onerror="this.src='https://placehold.co/60/0a2b1a/f5b041?text=%D8%B5%D9%88%D8%B1%D8%A9'">
+          <div class="item-info">
+            <div class="name">${esc(it.name)}</div>
+            <div class="meta">${esc(it.price)} <span class="cat">• ${esc(it.category)}</span></div>
           </div>
-        `).join('');
-      }
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-sm btn-blue" onclick="toggleEdit(${i})">تعديل ✏️</button>
+          <button class="btn btn-sm ${it.available?'btn-green':''}" onclick="toggleAvail(${i})">${it.available?'متوفر ✓':'نفذ ✗'}</button>
+          <button class="btn btn-sm" style="background:rgba(255,255,255,.1);color:#fff" onclick="duplicate(${i})">نسخ 📋</button>
+          <button class="btn btn-sm btn-red" onclick="delItem(${i})">حذف 🗑️</button>
+        </div>
+        <div class="edit-form" id="ef_${i}">
+          <label>الاسم:</label>
+          <input type="text" id="eName_${i}" value="${escAttr(it.name)}">
+          <label>التصنيف:</label>
+          <input type="text" id="eCat_${i}" value="${escAttr(it.category)}" list="catsList">
+          <label>الوصف:</label>
+          <input type="text" id="eDesc_${i}" value="${escAttr(it.description||'')}">
+          <label>السعر:</label>
+          <input type="text" id="ePrice_${i}" value="${escAttr(it.price)}">
+          <label>تغيير الصورة (اختياري):</label>
+          <input type="file" accept="image/*" onchange="handleEditImage(this, ${i})">
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="btn btn-green btn-sm" onclick="saveEdit(${i})">حفظ ✅</button>
+            <button class="btn btn-sm" style="background:rgba(255,255,255,.1);color:#fff" onclick="toggleEdit(${i})">إلغاء</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
 
-      // مؤشر حجم البيانات
-      try {
-        const sizeKB = Math.round(JSON.stringify(appData).length / 1024);
-        const lbl = document.getElementById('dataSizeLabel');
-        lbl.className = 'data-size';
-        lbl.innerText = `حجم data.json الحالي: ${sizeKB} KB`;
-        if (sizeKB > 900) { lbl.classList.add('danger'); lbl.innerText += ' — خطر! قرّب من حد GitHub (1MB)'; }
-        else if (sizeKB > 600) { lbl.classList.add('warn'); lbl.innerText += ' — كبير نسبياً'; }
-      } catch(e) {}
-    }
+  const cats = [...new Set(appData.items.map(i=>i.category).filter(Boolean))];
+  $('#catsList').innerHTML = cats.map(c=>`<option value="${escAttr(c)}">`).join('');
 
-    function escapeHtml(s) {
-      return String(s == null ? '' : s).replace(/[&<>"']/g, c => (
-        { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]
-      ));
-    }
-    function escapeAttr(s) { return escapeHtml(s).replace(/"/g, '&quot;'); }
+  const kb = Math.round(JSON.stringify(appData).length / 1024);
+  const el = $('#sizeInfo');
+  el.className = 'size-info';
+  el.innerText = `حجم data.json: ${kb} KB`;
+  if(kb > 900){ el.classList.add('danger'); el.innerText += ' — ⚠️ اقتربت من الحد!'; }
+  else if(kb > 600){ el.classList.add('warn'); el.innerText += ' — كبير نسبياً'; }
+}
 
-    function toggleEditForm(i) {
-      const f = document.getElementById(`editForm_${i}`);
-      f.style.display = (f.style.display === "block") ? "none" : "block";
-    }
+function toggleEdit(i){ $('#ef_'+i).classList.toggle('show'); }
 
-    async function handleEditImageUpload(input, i) {
-      const file = input.files[0];
-      if (!file) return;
-      try {
-        const dataUrl = await compressImage(file);
-        appData.items[i].image = dataUrl;
-        alert("✅ تم ضغط الصورة محلياً. اضغط «حفظ ونشر» لتفعيلها.");
-      } catch (e) {
-        alert("❌ فشل معالجة الصورة");
-      }
-    }
+async function handleEditImage(input, i){
+  const f = input.files[0];
+  if(!f) return;
+  try{
+    const d = await compress(f);
+    appData.items[i].image = d;
+    toast('✅ الصورة جاهزة، اضغط حفظ');
+  }catch(e){ toast('فشل معالجة الصورة', true); }
+}
+async function saveEdit(i){
+  appData.items[i].name        = $('#eName_'+i).value.trim();
+  appData.items[i].category    = $('#eCat_'+i).value.trim();
+  appData.items[i].description = $('#eDesc_'+i).value.trim();
+  appData.items[i].price       = $('#ePrice_'+i).value.trim();
+  const ok = await saveToGitHub(`تعديل: ${appData.items[i].name}`);
+  if(ok) renderItems();
+}
+async function toggleAvail(i){
+  appData.items[i].available = !appData.items[i].available;
+  const ok = await saveToGitHub(`حالة: ${appData.items[i].name}`);
+  if(ok) renderItems();
+}
+async function duplicate(i){
+  const src = appData.items[i];
+  const copy = { ...src, id: Date.now(), name: src.name + ' (نسخة)' };
+  appData.items.splice(i+1, 0, copy);
+  const ok = await saveToGitHub(`نسخ: ${src.name}`);
+  if(ok) renderItems();
+}
+async function delItem(i){
+  if(!confirm('تأكيد حذف "' + appData.items[i].name + '"؟')) return;
+  const name = appData.items[i].name;
+  appData.items.splice(i,1);
+  const ok = await saveToGitHub(`حذف: ${name}`);
+  if(ok) renderItems();
+}
 
-    async function saveItemEdit(i) {
-      appData.items[i].name        = document.getElementById(`editName_${i}`).value.trim();
-      appData.items[i].category    = document.getElementById(`editCat_${i}`).value.trim();
-      appData.items[i].description = document.getElementById(`editDesc_${i}`).value.trim();
-      appData.items[i].price       = document.getElementById(`editPrice_${i}`).value.trim();
+async function saveSettings(){
+  appData.whatsapp_number = $('#waNum').value.trim();
+  appData.phone_number    = $('#phoneNum').value.trim();
+  appData.status_text     = $('#statusTxt').value.trim();
+  appData.ticker_text     = $('#tickerTxt').value.trim();
+  appData.delivery_mode   = currentMode;
+  appData.delivery_price  = $('#deliveryPrice').value.trim() || '0';
+  appData.delivery_message = $('#deliveryMessage').value.trim() || '🛵 قيمة التوصيل تُحدد حسب المنطقة';
 
-      const ok = await syncToGitHub(`تعديل صنف: ${appData.items[i].name}`);
-      if (ok) renderItemsList();
-    }
+  const b = $('#saveSettingsBtn');
+  b.disabled = true; b.innerText = '⏳ جاري النشر...';
+  await saveToGitHub('تحديث الإعدادات والتوصيل');
+  b.disabled = false; b.innerText = '⚡ حفظ كل الإعدادات';
+}
 
-    async function toggleAvail(i) {
-      appData.items[i].available = !appData.items[i].available;
-      const ok = await syncToGitHub(`تغيير حالة: ${appData.items[i].name}`);
-      if (ok) renderItemsList();
-    }
-
-    async function deleteItem(i) {
-      if (!confirm('تأكيد حذف الصنف؟')) return;
-      const name = appData.items[i].name;
-      appData.items.splice(i, 1);
-      const ok = await syncToGitHub(`حذف صنف: ${name}`);
-      if (ok) renderItemsList();
-    }
-
-    /* ============ الإعدادات العامة ============ */
-    async function saveGeneralSettings() {
-      appData.whatsapp_number = document.getElementById('waNum').value.trim();
-      appData.phone_number    = document.getElementById('phoneNum').value.trim();
-      appData.status_text     = document.getElementById('statusTxt').value.trim();
-      appData.ticker_text     = document.getElementById('tickerTxt').value.trim();
-      await syncToGitHub("تحديث الإعدادات العامة");
-    }
-  </script>
+document.addEventListener('DOMContentLoaded', () => { checkToken(); loadData(); });
+</script>
 </body>
 </html>
