@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
-    body { background: #081d13; color: white; padding: 20px; max-width: 800px; margin: 0 auto; padding-bottom: 50px; }
+    body { background: #081d13; color: white; padding: 20px; max-width: 800px; margin: 0 auto; padding-bottom: 60px; }
     h1 { color: #f39c12; margin-bottom: 8px; font-weight: 900; }
     .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 18px; padding: 20px; margin-bottom: 22px; }
     label { display: block; font-size: 0.88rem; color: #ffe082; margin-bottom: 6px; font-weight: 700; }
@@ -34,10 +34,18 @@
 <body>
 
   <h1>لوحة إدارة المنيو ⚡</h1>
-  <p style="color: #a4c2b2; margin-bottom: 15px; font-size: 0.9rem;">أي إضافة أو تعديل ينعكس مباشرة على صفحة الزبون تلقائياً.</p>
+  <p style="color: #a4c2b2; margin-bottom: 18px; font-size: 0.9rem;">تعديل الأصناف والأسعار والحالة مباشرة لصفحة الزبون.</p>
 
-  <!-- شريط حالة ومربع التوكن -->
-  <div id="tokenBanner" style="margin-bottom: 22px;"></div>
+  <!-- مربع إدخال التوكن لمرة واحدة فقط -->
+  <div id="tokenSection" style="display:none; margin-bottom: 22px;">
+    <div style="background:rgba(243, 156, 18, 0.15); border:1px solid #f39c12; padding:16px; border-radius:14px;">
+      <label style="color:#ffe082; font-weight:700; margin-bottom:8px; display:block;">🔑 أدخل التوكن المرة الأولى فقط لتفعيل الربط المباشر:</label>
+      <div style="display:flex; gap:8px;">
+        <input type="password" id="inputToken" placeholder="الصق رمز التوكن هنا" style="margin-bottom:0;">
+        <button class="btn btn-green" onclick="saveInputToken()" style="white-space:nowrap;">حفظ وتمكين</button>
+      </div>
+    </div>
+  </div>
 
   <!-- الإعدادات العامة -->
   <div class="card">
@@ -89,6 +97,10 @@
     <div id="itemsContainer">جاري التحميل...</div>
   </div>
 
+  <div style="text-align: center; margin-top: 30px;">
+    <button onclick="resetToken()" style="background:none; border:none; color:#a4c2b2; text-decoration:underline; font-size:0.75rem; cursor:pointer;">إعادة ضبط التوكن المسجل 🔑</button>
+  </div>
+
   <!-- رسالة التنبيه الفورية -->
   <div id="statusToast"></div>
 
@@ -106,24 +118,11 @@
 
     function checkTokenUI() {
       const token = localStorage.getItem("gh_token");
-      const banner = document.getElementById("tokenBanner");
-      if (token) {
-        banner.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(39, 174, 96, 0.15); border:1px solid #27ae60; padding:12px 16px; border-radius:14px;">
-            <span style="color:#2ecc71; font-weight:700; font-size:0.9rem;">✅ الربط التلقائي بـ GitHub مفعل وجاهز</span>
-            <button class="btn btn-sm btn-danger" onclick="resetToken()" style="font-size:0.8rem;">تغيير التوكن 🔑</button>
-          </div>
-        `;
+      const tokenSection = document.getElementById("tokenSection");
+      if (!token) {
+        tokenSection.style.display = "block";
       } else {
-        banner.innerHTML = `
-          <div style="background:rgba(243, 156, 18, 0.15); border:1px solid #f39c12; padding:16px; border-radius:14px;">
-            <label style="color:#ffe082; font-weight:700; margin-bottom:8px; display:block;">🔑 أدخل توكن GitHub لتفعيل التحديث الفوري (مرة واحدة فقط):</label>
-            <div style="display:flex; gap:8px;">
-              <input type="password" id="inputToken" placeholder="الصق رمز github_pat_... هنا" style="margin-bottom:0;">
-              <button class="btn btn-green" onclick="saveInputToken()" style="white-space:nowrap;">حفظ التوكن</button>
-            </div>
-          </div>
-        `;
+        tokenSection.style.display = "none";
       }
     }
 
@@ -139,7 +138,7 @@
     }
 
     function resetToken() {
-      if(confirm("هل تريد إزالة التوكن المسجل وإدخال توكن جديد؟")) {
+      if(confirm("هل تريد مسح التوكن المسجل وإدخال توكن جديد؟")) {
         localStorage.removeItem("gh_token");
         checkTokenUI();
       }
@@ -183,7 +182,8 @@
     async function syncToGitHub(commitMsg) {
       const token = localStorage.getItem("gh_token");
       if (!token) {
-        alert("⚠️ يرجى أدخال رمز التوكن في المربع البرتقالي بأعلى الصفحة أولاً لتمكين التحديث التلقائي.");
+        alert("⚠️ يرجى إدخال رمز التوكن أولاً لتمكين التحديث التلقائي.");
+        checkTokenUI();
         return false;
       }
 
@@ -223,7 +223,7 @@
         });
 
         if (putRes.ok) {
-          showToast("✅ تم التحديث بنجاح! سينعكس التغيير على صفحة الزبون مباشرة.");
+          showToast("✅ تم التحديث بنجاح! سينعكس التغيير على صفحة الزبون.");
           return true;
         } else {
           const errData = await putRes.json();
@@ -324,7 +324,6 @@
               <input type="text" id="editName_${index}" value="${item.name}">
               
               <label>التصنيف:</label>
-
               <input type="text" id="editCat_${index}" value="${item.category}">
 
               <label>الوصف:</label>
