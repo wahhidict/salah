@@ -78,6 +78,9 @@ textarea{resize:vertical;min-height:60px}
     <input type="text" id="statusTxt" placeholder="مفتوح الآن • توصيل لجميع مناطق دمشق">
     <label>نص الشريط المتحرك:</label>
     <input type="text" id="tickerTxt" placeholder="أهلاً بكم في فواكه أبو صلاح">
+    <label>رابط موقع المحل (Google Maps):</label>
+    <input type="text" id="locationUrl" placeholder="https://maps.app.goo.gl/...">
+    <p style="font-size:.7rem;color:var(--sub);margin-top:-8px;margin-bottom:12px">افتح Google Maps → ابحث عن موقعك → انسخ الرابط والصقه هنا</p>
   </div>
 
   <div class="card">
@@ -198,6 +201,7 @@ async function loadData(){
         ticker_text: 'أهلاً بكم في فواكه أبو صلاح',
         delivery_mode: 'message', delivery_price: '0',
         delivery_message: '🛵 قيمة التوصيل تُحدد حسب المنطقة',
+        location_url: '',
         items: []
       };
       fillForm(); renderItems(); return;
@@ -215,6 +219,7 @@ function fillForm(){
   $('#phoneNum').value  = appData.phone_number    || '';
   $('#statusTxt').value = appData.status_text     || '';
   $('#tickerTxt').value = appData.ticker_text     || '';
+  $('#locationUrl').value = appData.location_url   || '';
   $('#deliveryPrice').value   = appData.delivery_price   || '';
   $('#deliveryMessage').value = appData.delivery_message || '🛵 قيمة التوصيل تُحدد حسب المنطقة';
   setDeliveryMode(appData.delivery_mode || 'message');
@@ -399,6 +404,7 @@ async function saveSettings(){
   appData.phone_number    = $('#phoneNum').value.trim();
   appData.status_text     = $('#statusTxt').value.trim();
   appData.ticker_text     = $('#tickerTxt').value.trim();
+  appData.location_url    = $('#locationUrl').value.trim();
   appData.delivery_mode   = currentMode;
   appData.delivery_price  = $('#deliveryPrice').value.trim() || '0';
   appData.delivery_message = $('#deliveryMessage').value.trim() || '🛵 قيمة التوصيل تُحدد حسب المنطقة';
