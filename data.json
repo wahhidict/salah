@@ -48,16 +48,6 @@
       "image": "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=600&q=80"
     },
     {
-      "id": 1700000000005,
-      "name": "كوكتيل موز وحليب",
-      "category": "كوكتيلات كريمية",
-      "description": "موز طازج، حليب، عسل — الكلاسيكي المحبوب",
-      "price": "55,000 ل.س",
-      "available": true,
-      "featured": false,
-      "image": "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600&q=80"
-    },
-    {
       "id": 1700000000006,
       "name": "كوكتيل مانجو وحليب",
       "category": "كوكتيلات كريمية",
