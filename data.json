@@ -34,7 +34,7 @@
       "description": "أفوكادو، حليب مكثف، عسل، مكسرات — قوام كريمي فاخر",
       "price": "75,000 ل.س",
       "available": true,
-      "featured": true,
+      "featured": false,
       "image": "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=600&q=80"
     },
     {
